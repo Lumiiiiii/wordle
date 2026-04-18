@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Wordle Clone Italiano</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-bg: #121213;
-            --color-bg-grad: radial-gradient(circle at 50% 0%, #202124, #121213 100%);
-            --color-text: #ffffff;
-            --color-correct: #538d4e;
-            --color-correct-glow: rgba(83, 141, 78, 0.4);
-            --color-present: #b59f3b;
-            --color-present-glow: rgba(181, 159, 59, 0.4);
-            --color-absent: #3a3a3c;
-            --color-key-bg: #818384;
-            --color-border: #3a3a3c;
-            --color-border-active: #787c7e;
-            --font-family: 'Outfit', 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
-            --radius-tile: 10px;
+            --color-bg: #2b3a32;
+            --color-bg-grad: #2b3a32;
+            --color-text: #fdfdfd;
+            --color-correct: #5b8a53;
+            --color-correct-glow: rgba(91, 138, 83, 0.4);
+            --color-present: #c9b458;
+            --color-present-glow: rgba(201, 180, 88, 0.4);
+            --color-absent: #1e2923;
+            --color-key-bg: #5c635e;
+            --color-border: rgba(255, 255, 255, 0.3);
+            --color-border-active: rgba(255, 255, 255, 0.8);
+            --font-family: 'Patrick Hand', 'Chalkboard SE', 'Comic Sans MS', cursive;
+            --radius-tile: 8px;
             --radius-key: 6px;
         }
 
@@ -183,45 +183,48 @@
         #keyboard {
             width: 100%;
             max-width: 500px;
-            padding: 8px;
+            padding: 6px;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            margin-bottom: max(10px, env(safe-area-inset-bottom));
+            gap: 6px;
+            margin-bottom: max(6px, env(safe-area-inset-bottom));
             flex-shrink: 0;
+            background-color: transparent;
         }
 
         .keyboard-row {
             display: flex;
             justify-content: center;
-            gap: 6px;
+            gap: 5px;
         }
 
         .key {
             font-family: inherit;
-            font-weight: 600;
+            font-weight: 500;
             border: 0;
             padding: 0;
             margin: 0;
-            height: clamp(45px, 7vh, 60px);
+            height: clamp(40px, 6.5vh, 50px);
             border-radius: var(--radius-key);
             cursor: pointer;
             user-select: none;
             background-color: var(--color-key-bg);
             color: var(--color-text);
             flex: 1;
+            max-width: 44px; /* Limita la larghezza per non farli sembrare troppo allungati su schermi larghi */
             display: flex;
             justify-content: center;
             align-items: center;
             text-transform: uppercase;
-            font-size: clamp(0.9rem, 4vw, 1.25rem);
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            transition: all 0.1s ease;
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent;
-            box-shadow: 0 3px 0 0 rgba(0,0,0,0.3);
+            box-shadow: 0 2px 0 0 rgba(0,0,0,0.25);
             position: relative;
             overflow: hidden;
+            letter-spacing: 0.5px;
         }
 
         .key::after {
@@ -230,7 +233,7 @@
             top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(255,255,255,0.1);
             opacity: 0;
-            transition: opacity 0.2s;
+            transition: opacity 0.15s;
         }
 
         .key:active::after {
@@ -238,13 +241,14 @@
         }
 
         .key:active {
-            transform: translateY(3px) scale(0.96);
-            box-shadow: 0 0px 0 0 rgba(0,0,0,0.3);
+            transform: translateY(2px) scale(0.97);
+            box-shadow: 0 0px 0 0 rgba(0,0,0,0.25);
         }
 
         .key.large {
             flex: 1.5;
-            font-size: clamp(0.7rem, 3.2vw, 1rem);
+            max-width: 65px;
+            font-size: clamp(0.8rem, 3vw, 1rem);
         }
 
         /* Post-flip states for tiles and keys */
