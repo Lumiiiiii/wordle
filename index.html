@@ -838,6 +838,35 @@
         .footer-links a:hover {
             color: var(--color-accent);
         }
+
+        /* Mobile: header più compatto per non schiacciare il board */
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 22px;
+                margin: 4px 0 2px;
+            }
+
+            .header-bar {
+                gap: 6px;
+            }
+
+            .btn-top10 {
+                font-size: 0.75rem;
+                padding: 5px 10px;
+            }
+
+            #streak-container {
+                font-size: 0.85rem;
+            }
+
+            #timer-container {
+                font-size: 0.8rem;
+            }
+
+            .nickname-display {
+                font-size: 0.72rem;
+            }
+        }
     </style>
 </head>
 
@@ -868,9 +897,8 @@
                         <path
                             d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.6 1.9 4.7 4.4 5.1.7 1.2 1.8 2.1 3.1 2.5V19H7v2h10v-2h-3.5v-3.4c1.3-.4 2.4-1.3 3.1-2.5C19.1 12.7 21 10.6 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.9C5.8 10.4 5 9.3 5 8zm14 0c0 1.3-.8 2.4-2 2.9V7h2v1z" />
                     </svg></span> Classifica</button>
-            <a href="impiccato.html" class="btn-top10"
-                style="text-decoration:none;font-size:1rem;padding:8px 20px;background:linear-gradient(135deg,#e040fb,#ff5252);">Gioca
-                all'impiccato</a>
+            <a href="impiccato.html" class="btn-top10 btn-impiccato"
+                style="text-decoration:none;background:linear-gradient(135deg,#e040fb,#ff5252);">Impiccato</a>
             <span id="nickname-display" class="nickname-display" onclick="cambiaNickname()"
                 title="Clicca per cambiare nickname" style="font-size:1rem;color:#bbb;"></span>
         </div>
