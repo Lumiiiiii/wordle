@@ -816,6 +816,26 @@
             color: var(--color-present);
             font-size: 1.5rem;
         }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 10px 0;
+            font-size: 0.75rem;
+            color: #666;
+            flex-shrink: 0;
+        }
+
+        .footer-links a {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--color-accent);
+        }
     </style>
 </head>
 
@@ -898,6 +918,14 @@
             <button class="key" data-key="M">M</button>
             <button class="key large" data-key="BACKSPACE">⌫</button>
         </div>
+    </div>
+
+    <div class="footer-links">
+        <a href="come-si-gioca.html">Come si gioca</a>
+        <span>•</span>
+        <a href="contatti.html">Contatti</a>
+        <span>•</span>
+        <a href="privacy.html">Privacy Policy</a>
     </div>
 
     <!-- Modal for Endgame screen -->
