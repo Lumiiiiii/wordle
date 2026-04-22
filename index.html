@@ -324,6 +324,22 @@
             }
         }
 
+        /* Hidden native input for mobile keyboard */
+        #native-input {
+            position: absolute;
+            opacity: 0;
+            width: 1px;
+            height: 1px;
+            top: -9999px;
+            left: -9999px;
+            pointer-events: none;
+            caret-color: transparent;
+            color: transparent;
+            background: transparent;
+            border: none;
+            outline: none;
+        }
+
         /* Keyboard */
         #keyboard {
             width: 100%;
@@ -334,6 +350,13 @@
             gap: 5px;
             margin-bottom: max(6px, env(safe-area-inset-bottom));
             flex-shrink: 0;
+        }
+
+        /* Su mobile usa la tastiera nativa → nascondi quella virtuale */
+        @media (hover: none) and (pointer: coarse) {
+            #keyboard {
+                display: none;
+            }
         }
 
         .keyboard-row {
@@ -838,6 +861,11 @@
 
     <div id="message-container"></div>
 
+    <!-- Input nascosto per tastiera nativa mobile -->
+    <input id="native-input" type="text" inputmode="text" autocomplete="off"
+        autocorrect="off" autocapitalize="none" spellcheck="false"
+        aria-hidden="true" tabindex="-1">
+
     <div id="board-container">
         <div id="board"></div>
     </div>
@@ -1250,8 +1278,10 @@
             }
         }
 
-        // Event Listeners
+        // Event Listeners — tastiera fisica (desktop)
         document.addEventListener('keydown', (e) => {
+            // Ignora se il focus è sul nickname input
+            if (document.activeElement === document.getElementById('nickname-input')) return;
             if (e.key === 'Enter') {
                 handleInput('ENTER');
             } else if (e.key === 'Backspace') {
@@ -1261,10 +1291,56 @@
             }
         });
 
+        // Tastiera virtuale (tasti HTML)
         document.querySelectorAll('.key').forEach(key => {
             key.addEventListener('click', () => {
                 handleInput(key.dataset.key);
             });
+        });
+
+        // ── Tastiera nativa mobile ──────────────────────────────────────────
+        const nativeInput = document.getElementById('native-input');
+        const isMobile = () => window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
+        // Porta il focus sull'input nascosto quando si tocca il board
+        document.getElementById('board-container').addEventListener('click', () => {
+            if (isMobile()) nativeInput.focus();
+        });
+
+        // Mantieni il focus sull'input nascosto quando si tocca fuori (mobile)
+        document.body.addEventListener('click', (e) => {
+            if (!isMobile()) return;
+            const overlay = document.getElementById('nickname-overlay');
+            if (overlay && overlay.style.display === 'flex') return;
+            // Non rubare il focus se si sta cliccando su nickname input
+            if (e.target === document.getElementById('nickname-input')) return;
+            nativeInput.focus();
+        });
+
+        // Intercetta i caratteri digitati nella tastiera nativa
+        nativeInput.addEventListener('input', (e) => {
+            const val = nativeInput.value;
+            if (!val) return;
+            nativeInput.value = '';
+            for (const ch of val) {
+                if (/^[a-zA-Z]$/.test(ch)) handleInput(ch.toUpperCase());
+            }
+        });
+
+        nativeInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleInput('ENTER');
+            } else if (e.key === 'Backspace') {
+                // Prevenire che il browser cancelli il valore (è già vuoto)
+                e.preventDefault();
+                handleInput('BACKSPACE');
+            }
+        });
+
+        // Attiva il focus sull'input nascosto al caricamento su mobile
+        window.addEventListener('load', () => {
+            if (isMobile()) setTimeout(() => nativeInput.focus(), 300);
         });
 
         // Animations and Endgame logic
