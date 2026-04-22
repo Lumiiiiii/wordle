@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Contatti - Wordle IT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #0f0f0f;
+            --color-text: #eaeaea;
+            --color-accent: #6c63ff;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        body {
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-family: var(--font-family);
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            max-width: 600px;
+            text-align: center;
+        }
+        h1 { color: var(--color-accent); margin-top: 40px; }
+        .btn-back {
+            display: inline-block;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--color-accent), #8b5cf6);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.4);
+            transition: transform 0.2s;
+        }
+        .btn-back:hover { transform: translateY(-2px); }
+        .contact-card {
+            background: #1a1a2e;
+            border: 1px solid rgba(108, 99, 255, 0.2);
+            padding: 40px 20px;
+            border-radius: 16px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .email-link {
+            font-size: 1.2rem;
+            color: #fff;
+            text-decoration: none;
+            background: var(--color-accent);
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+        .email-link:hover {
+            background: #8b5cf6;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: left;">
+        <a href="index.html" class="btn-back">← Torna al gioco</a>
+    </div>
+    
+    <div class="contact-card">
+        <h1>Serve aiuto o hai dei suggerimenti?</h1>
+        <p>Siamo sempre a disposizione per ascoltare i nostri utenti.</p>
+        <p>Se hai incontrato un problema, se vuoi richiedere la cancellazione dei dati in classifica, o semplicemente vuoi mandarci i tuoi pareri, contattaci direttamente a questa email:</p>
+        <a href="mailto:lumiburroni@gmail.com" class="email-link">lumiburroni@gmail.com</a>
+    </div>
+</body>
+</html>
