@@ -790,6 +790,27 @@
         .btn-confirm-nick:active {
             transform: translateY(1px);
         }
+
+        /* Timer */
+        #timer-container {
+            font-size: 0.95rem;
+            color: #aaa;
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        #timer-container .icon {
+            color: #666;
+        }
+
+        .stat-box.stat-time .stat-num {
+            color: var(--color-present);
+            font-size: 1.5rem;
+        }
     </style>
 </head>
 
@@ -803,16 +824,13 @@
         <div class="header-bar">
             <div id="streak-container">
                 STREAK: <span id="current-streak">0</span>
-                <span class="icon icon-flame"><svg viewBox="0 0 24 24">
-                        <path
-                            d="M12 23c-3.6 0-8-2.4-8-7.7 0-4 3.1-7.3 5.1-9.3.4-.4 1.1-.2 1.2.3.3 1.5.9 3 2.2 4.1.1-.8.3-2 .7-3.1C14.2 4.4 13 2.1 12.5 1.3c-.2-.4.1-.9.6-.9 3.1.3 7.9 4.2 7.9 10.3 0 5.2-4.4 7.7-8 7.7 0 0-1-.1-1.6-.5-.5-.3-.3-1.1.3-1.1 1.1 0 2.5-.8 3-2.5.1-.4-.1-.8-.4-1-1.1-.7-2.1-1.9-2.5-3.5-.1-.3-.4-.4-.7-.2C9 11.2 7 13.5 7 15.4c0 3.2 2.7 4.6 5 4.6 2.9 0 5-1.8 5-4.7 0-3.7-2.9-7-5.3-8.5-.2.7-.3 1.5-.3 2.2 0 .4-.4.6-.7.4C8.5 8 7.7 5.7 7.5 4.3c-.1-.3-.3-.4-.6-.2C5.1 5.5 4 8 4 10.8 4 15 6.7 20 12 20c3 0 5-2.2 5-4.7 0 0 .2 4.7-5 7.7z" />
-                    </svg></span>
+                <span class="icon icon-flame"><svg viewBox="0 0 16 16"><path d="M8 16c-3.3 0-5-2.3-5-4.8 0-2.5 1.5-4.1 2.7-5.3.2-.2.5 0 .5.3 0 .7.2 1.7.9 2.4.1-.5.4-1.3.9-2.1C8.7 5.3 8 3.7 7.7 3c-.1-.2.1-.4.3-.4 2.1.3 5 3 5 6.2 0 3.2-2.3 5.2-5 5.2zm0-2c1.5 0 2.5-1 2.5-2.5 0-1.5-1-2.8-2-3.5-.1.5-.3 1-.7 1.5-.1.2-.4.1-.5-.1-.2-.6-.5-1.2-.8-1.6-.8 1-1.5 2-1.5 3.2C5 12.8 6.2 14 8 14z"/></svg></span>
             </div>
-            <button class="btn-top10" onclick="mostraClassifica()"><span class="icon icon-trophy"><svg
-                        viewBox="0 0 24 24">
-                        <path
-                            d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.6 1.9 4.7 4.4 5.1.7 1.2 1.8 2.1 3.1 2.5V19H7v2h10v-2h-3.5v-3.4c1.3-.4 2.4-1.3 3.1-2.5C19.1 12.7 21 10.6 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.9C5.8 10.4 5 9.3 5 8zm14 0c0 1.3-.8 2.4-2 2.9V7h2v1z" />
-                    </svg></span> TOP 10</button>
+            <div id="timer-container">
+                <span class="icon"><svg viewBox="0 0 24 24"><path d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42A8.962 8.962 0 0 0 12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg></span>
+                <span id="timer-display">0s</span>
+            </div>
+            <button class="btn-top10" onclick="mostraClassifica()"><span class="icon icon-trophy"><svg viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.6 1.9 4.7 4.4 5.1.7 1.2 1.8 2.1 3.1 2.5V19H7v2h10v-2h-3.5v-3.4c1.3-.4 2.4-1.3 3.1-2.5C19.1 12.7 21 10.6 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.9C5.8 10.4 5 9.3 5 8zm14 0c0 1.3-.8 2.4-2 2.9V7h2v1z"/></svg></span> TOP 10</button>
             <span id="nickname-display" class="nickname-display" onclick="cambiaNickname()"
                 title="Clicca per cambiare nickname"></span>
         </div>
@@ -881,6 +899,10 @@
                     <div class="stat-num" id="stat-winpct">0%</div>
                     <div class="stat-label">Win %</div>
                 </div>
+                <div class="stat-box stat-time">
+                    <div class="stat-num" id="stat-time">—</div>
+                    <div class="stat-label">Tempo</div>
+                </div>
             </div>
 
             <div id="mini-board-container"></div>
@@ -926,6 +948,38 @@
         let currentStreak = parseInt(localStorage.getItem('wordle_streak')) || 0;
         document.getElementById('current-streak').textContent = currentStreak;
         updateNicknameDisplay();
+
+        // Timer
+        let secondi = 0;
+        let timerIntervallo = null;
+        let timerStarted = false;
+
+        function startTimer() {
+            if (timerStarted) return;
+            timerStarted = true;
+            timerIntervallo = setInterval(() => {
+                secondi++;
+                document.getElementById('timer-display').textContent = secondi + 's';
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerIntervallo);
+            timerIntervallo = null;
+        }
+
+        function resetTimer() {
+            stopTimer();
+            secondi = 0;
+            timerStarted = false;
+            document.getElementById('timer-display').textContent = '0s';
+        }
+
+        function formatTime(s) {
+            if (s === null || s === undefined) return '—';
+            if (s < 60) return s + 's';
+            return Math.floor(s / 60) + 'm ' + (s % 60) + 's';
+        }
 
         let DICTIONARY = [];
         let TARGET_WORD = "";
@@ -1051,6 +1105,9 @@
             if (isGameOver || isAnimating) return;
             // Non gestire input se il modal nickname è aperto
             if (document.getElementById('nickname-overlay').style.display === 'flex') return;
+
+            // Avvia il timer al primo tasto premuto
+            startTimer();
 
             key = key.toUpperCase();
 
@@ -1222,13 +1279,12 @@
             }
         }
 
-        // Upsert: aggiorna la streak se il nickname esiste già, altrimenti inserisci nuovo record
-        async function inviaPunteggio(nome, punteggio) {
+        // Upsert: aggiorna streak e tempo_impiegato se migliorano
+        async function inviaPunteggio(nome, punteggio, tempo) {
             try {
-                // Prima controlla se esiste già un record per questo username
                 const { data: existing, error: fetchError } = await _supabase
                     .from('classifica')
-                    .select('id, streak')
+                    .select('id, streak, tempo_impiegato')
                     .eq('username', nome)
                     .limit(1);
 
@@ -1238,32 +1294,26 @@
                 }
 
                 if (existing && existing.length > 0) {
-                    // Aggiorna solo se la nuova streak è più alta
-                    if (punteggio > existing[0].streak) {
+                    const updates = {};
+                    if (punteggio > existing[0].streak) updates.streak = punteggio;
+                    const prevTempo = existing[0].tempo_impiegato;
+                    if (prevTempo === null || prevTempo === undefined || tempo < prevTempo) {
+                        updates.tempo_impiegato = tempo;
+                    }
+                    if (Object.keys(updates).length > 0) {
                         const { error: updateError } = await _supabase
                             .from('classifica')
-                            .update({ streak: punteggio })
+                            .update(updates)
                             .eq('id', existing[0].id);
-
-                        if (updateError) {
-                            console.error("Errore nell'aggiornamento:", updateError);
-                        } else {
-                            console.log("Streak aggiornata in classifica!");
-                        }
-                    } else {
-                        console.log("La streak attuale non supera il record personale.");
+                        if (updateError) console.error("Errore aggiornamento:", updateError);
+                        else console.log("Record aggiornato:", updates);
                     }
                 } else {
-                    // Inserisci nuovo record
                     const { error: insertError } = await _supabase
                         .from('classifica')
-                        .insert([{ username: nome, streak: punteggio }]);
-
-                    if (insertError) {
-                        console.error("Errore di salvataggio:", insertError);
-                    } else {
-                        console.log("Nuovo record salvato in classifica!");
-                    }
+                        .insert([{ username: nome, streak: punteggio, tempo_impiegato: tempo }]);
+                    if (insertError) console.error("Errore di salvataggio:", insertError);
+                    else console.log("Nuovo record salvato!");
                 }
             } catch (err) {
                 console.error("Errore generico:", err);
@@ -1271,14 +1321,15 @@
         }
 
         function endGame(won) {
+            stopTimer();
             stats.played++;
             if (won) {
                 stats.won++;
                 currentStreak++;
 
-                // Invia automaticamente il punteggio usando il nickname salvato
+                // Invia il punteggio con il tempo impiegato
                 if (playerNickname) {
-                    inviaPunteggio(playerNickname, currentStreak);
+                    inviaPunteggio(playerNickname, currentStreak, secondi);
                 }
             } else {
                 currentStreak = 0;
@@ -1294,6 +1345,7 @@
 
             let winPct = stats.played === 0 ? 0 : Math.round((stats.won / stats.played) * 100);
             document.getElementById('stat-winpct').textContent = winPct + '%';
+            document.getElementById('stat-time').textContent = won ? formatTime(secondi) : '—';
 
             // Generate mini board
             let miniBoardHTML = '';
@@ -1308,7 +1360,7 @@
             }
             document.getElementById('mini-board-container').innerHTML = miniBoardHTML;
 
-            document.getElementById('modal-title').textContent = won ? "Hai Vinto! 🎉" : "Sconfitta 😢";
+            document.getElementById('modal-title').textContent = won ? "Hai Vinto!" : "Sconfitta";
             document.getElementById('modal-subtitle').textContent = won ? `Tentativo ${currentR + 1} di ${ROWS}` : `La parola era: ${TARGET_WORD}`;
             document.getElementById('message-container').innerHTML = '';
             document.getElementById('modal-overlay').style.display = 'flex';
@@ -1333,6 +1385,7 @@
             currentC = 0;
             isGameOver = false;
             TARGET_WORD = DICTIONARY[Math.floor(Math.random() * DICTIONARY.length)];
+            resetTimer();
         }
 
         async function mostraClassifica() {
@@ -1343,7 +1396,7 @@
 
             const { data, error } = await _supabase
                 .from('classifica')
-                .select('username, streak')
+                .select('username, streak, tempo_impiegato')
                 .order('streak', { ascending: false })
                 .limit(10);
 
@@ -1353,15 +1406,18 @@
             } else if (!data || data.length === 0) {
                 list.innerHTML = "<p style='text-align:center; color:#888;'>Nessun punteggio ancora. Sii il primo!</p>";
             } else {
+                const flameIcon = '<span class="icon icon-flame" style="font-size:0.9em"><svg viewBox="0 0 16 16"><path d="M8 16c-3.3 0-5-2.3-5-4.8 0-2.5 1.5-4.1 2.7-5.3.2-.2.5 0 .5.3 0 .7.2 1.7.9 2.4.1-.5.4-1.3.9-2.1C8.7 5.3 8 3.7 7.7 3c-.1-.2.1-.4.3-.4 2.1.3 5 3 5 6.2 0 3.2-2.3 5.2-5 5.2zm0-2c1.5 0 2.5-1 2.5-2.5 0-1.5-1-2.8-2-3.5-.1.5-.3 1-.7 1.5-.1.2-.4.1-.5-.1-.2-.6-.5-1.2-.8-1.6-.8 1-1.5 2-1.5 3.2C5 12.8 6.2 14 8 14z"/></svg></span>';
                 list.innerHTML = data.map((player, index) => {
                     const rankClass = index === 0 ? 'gold' : index === 1 ? 'silver' : index === 2 ? 'bronze' : '';
-                    const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}.`;
+                    const medal = index === 0 ? '1°' : index === 1 ? '2°' : index === 2 ? '3°' : `${index + 1}.`;
                     const isMe = player.username === playerNickname;
+                    const tempoStr = player.tempo_impiegato != null ? formatTime(player.tempo_impiegato) : '—';
                     return `
                         <div class="lb-entry" ${isMe ? 'style="background: rgba(108, 99, 255, 0.1);"' : ''}>
                             <span class="lb-rank ${rankClass}">${medal}</span>
                             <span class="lb-name">${player.username}${isMe ? ' (tu)' : ''}</span>
-                            <span class="lb-score">${player.streak} 🔥</span>
+                            <span class="lb-score">${player.streak} ${flameIcon}</span>
+                            <span style="color:#aaa; font-size:0.8rem; min-width:42px; text-align:right;">${tempoStr}</span>
                         </div>
                     `;
                 }).join('');
