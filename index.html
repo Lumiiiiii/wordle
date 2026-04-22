@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Wordle Clone Italiano</title>
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
     <style>
@@ -33,7 +35,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 100vh; /* fallback */
+            height: 100vh;
+            /* fallback */
             height: 100dvh;
             overflow: hidden;
             touch-action: pan-y;
@@ -47,8 +50,8 @@
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             z-index: 10;
-            box-shadow: 0 4px 25px rgba(0,0,0,0.3);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             flex-shrink: 0;
         }
 
@@ -77,7 +80,7 @@
         }
 
         .message {
-            background-color: rgba(255,255,255,0.95);
+            background-color: rgba(255, 255, 255, 0.95);
             color: #121213;
             padding: 14px 24px;
             border-radius: 12px;
@@ -85,7 +88,7 @@
             margin-bottom: 12px;
             opacity: 1;
             transition: opacity 0.5s ease-out, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
             text-align: center;
             transform: translateY(0);
             pointer-events: auto;
@@ -116,7 +119,7 @@
             padding: 10px;
             box-sizing: border-box;
             width: 100%;
-            max-width: min(380px, 100%, calc((100dvh - 280px) * 5 / 6));
+            max-width: min(380px, 95%, calc((100dvh - 350px) * 5 / 6));
             aspect-ratio: 5 / 6;
             margin: 0 auto;
         }
@@ -159,24 +162,61 @@
 
         /* Flip Animation */
         @keyframes flip-in {
-            0% { transform: rotateX(0deg) scale(1.02); }
-            50% { transform: rotateX(-90deg) scale(1.05); }
-            100% { transform: rotateX(-90deg) scale(1.05); }
+            0% {
+                transform: rotateX(0deg) scale(1.02);
+            }
+
+            50% {
+                transform: rotateX(-90deg) scale(1.05);
+            }
+
+            100% {
+                transform: rotateX(-90deg) scale(1.05);
+            }
         }
 
         @keyframes flip-out-correct {
-            0% { transform: rotateX(-90deg) scale(1.05); background-color: var(--color-correct); border-color: transparent; }
-            100% { transform: rotateX(0deg) scale(1); background-color: var(--color-correct); border-color: transparent; box-shadow: 0 0 15px var(--color-correct-glow); }
+            0% {
+                transform: rotateX(-90deg) scale(1.05);
+                background-color: var(--color-correct);
+                border-color: transparent;
+            }
+
+            100% {
+                transform: rotateX(0deg) scale(1);
+                background-color: var(--color-correct);
+                border-color: transparent;
+                box-shadow: 0 0 15px var(--color-correct-glow);
+            }
         }
 
         @keyframes flip-out-present {
-            0% { transform: rotateX(-90deg) scale(1.05); background-color: var(--color-present); border-color: transparent; }
-            100% { transform: rotateX(0deg) scale(1); background-color: var(--color-present); border-color: transparent; box-shadow: 0 0 15px var(--color-present-glow); }
+            0% {
+                transform: rotateX(-90deg) scale(1.05);
+                background-color: var(--color-present);
+                border-color: transparent;
+            }
+
+            100% {
+                transform: rotateX(0deg) scale(1);
+                background-color: var(--color-present);
+                border-color: transparent;
+                box-shadow: 0 0 15px var(--color-present-glow);
+            }
         }
 
         @keyframes flip-out-absent {
-            0% { transform: rotateX(-90deg) scale(1.05); background-color: var(--color-absent); border-color: transparent; }
-            100% { transform: rotateX(0deg) scale(1); background-color: var(--color-absent); border-color: transparent; }
+            0% {
+                transform: rotateX(-90deg) scale(1.05);
+                background-color: var(--color-absent);
+                border-color: transparent;
+            }
+
+            100% {
+                transform: rotateX(0deg) scale(1);
+                background-color: var(--color-absent);
+                border-color: transparent;
+            }
         }
 
         /* Keyboard */
@@ -212,7 +252,8 @@
             background-color: var(--color-key-bg);
             color: var(--color-text);
             flex: 1;
-            max-width: 44px; /* Limita la larghezza per non farli sembrare troppo allungati su schermi larghi */
+            max-width: 44px;
+            /* Limita la larghezza per non farli sembrare troppo allungati su schermi larghi */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -221,7 +262,7 @@
             transition: all 0.1s ease;
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent;
-            box-shadow: 0 2px 0 0 rgba(0,0,0,0.25);
+            box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.25);
             position: relative;
             overflow: hidden;
             letter-spacing: 0.5px;
@@ -230,8 +271,11 @@
         .key::after {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255,255,255,0.1);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
             opacity: 0;
             transition: opacity 0.15s;
         }
@@ -242,7 +286,7 @@
 
         .key:active {
             transform: translateY(2px) scale(0.97);
-            box-shadow: 0 0px 0 0 rgba(0,0,0,0.25);
+            box-shadow: 0 0px 0 0 rgba(0, 0, 0, 0.25);
         }
 
         .key.large {
@@ -252,36 +296,52 @@
         }
 
         /* Post-flip states for tiles and keys */
-        .tile.correct, .key.correct {
+        .tile.correct,
+        .key.correct {
             background-color: var(--color-correct) !important;
             border-color: transparent !important;
             color: white;
             box-shadow: 0 0 15px var(--color-correct-glow);
         }
 
-        .tile.present, .key.present {
+        .tile.present,
+        .key.present {
             background-color: var(--color-present) !important;
             border-color: transparent !important;
             color: white;
             box-shadow: 0 0 15px var(--color-present-glow);
         }
 
-        .tile.absent, .key.absent {
+        .tile.absent,
+        .key.absent {
             background-color: var(--color-absent) !important;
             border-color: transparent !important;
             color: white;
             box-shadow: none !important;
         }
-        
-        .key.correct, .key.present, .key.absent {
+
+        .key.correct,
+        .key.present,
+        .key.absent {
             box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.4) !important;
         }
 
         /* Pop animation for letters appearing */
         @keyframes pop {
-            0% { transform: scale(0.85); opacity: 0; }
-            50% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1.02); opacity: 1; }
+            0% {
+                transform: scale(0.85);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.02);
+                opacity: 1;
+            }
         }
 
         .tile.pop {
@@ -290,12 +350,31 @@
 
         /* Victory Jump Animation */
         @keyframes jump {
-            0%, 20% { transform: translateY(0); }
-            40% { transform: translateY(-25px) scale(1.05); }
-            50% { transform: translateY(5px) scale(0.95); }
-            60% { transform: translateY(-12px) scale(1.02); }
-            80% { transform: translateY(3px) scale(0.98); }
-            100% { transform: translateY(0); }
+
+            0%,
+            20% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-25px) scale(1.05);
+            }
+
+            50% {
+                transform: translateY(5px) scale(0.95);
+            }
+
+            60% {
+                transform: translateY(-12px) scale(1.02);
+            }
+
+            80% {
+                transform: translateY(3px) scale(0.98);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
         }
 
         .tile.jump {
@@ -305,8 +384,11 @@
         /* Modal Overlay */
         #modal-overlay {
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0,0,0,0.6);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             display: none;
@@ -314,19 +396,19 @@
             align-items: center;
             z-index: 100;
         }
-        
+
         #modal-content {
             background-color: #1a1b1d;
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
             padding: 40px 30px;
             text-align: center;
             width: 90%;
             max-width: 380px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
             animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        
+
         #modal-title {
             margin-top: 0;
             font-size: 2.2rem;
@@ -341,29 +423,29 @@
             margin-bottom: 20px;
             font-weight: 600;
         }
-        
+
         .stats {
             display: flex;
             justify-content: space-around;
             margin: 25px 0;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 12px;
             padding: 20px 10px;
         }
-        
+
         .stat-box {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-        
+
         .stat-num {
             font-size: 2.2rem;
             font-weight: 700;
             color: #ffffff;
         }
-        
+
         .stat-label {
             font-size: 0.75rem;
             text-transform: uppercase;
@@ -371,7 +453,7 @@
             letter-spacing: 1.5px;
             margin-top: 6px;
         }
-        
+
         #mini-board-container {
             margin: 20px 0;
             display: flex;
@@ -385,7 +467,7 @@
             margin-bottom: 4px;
             font-size: 1.4rem;
         }
-        
+
         button#play-again {
             background: linear-gradient(135deg, var(--color-correct), #3ea735);
             color: white;
@@ -401,22 +483,32 @@
             box-shadow: 0 6px 20px rgba(83, 141, 78, 0.4);
             letter-spacing: 1px;
         }
-        
+
         button#play-again:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(83, 141, 78, 0.5);
         }
-        
+
         button#play-again:active {
             transform: translateY(2px);
             box-shadow: 0 2px 10px rgba(83, 141, 78, 0.4);
         }
     </style>
 </head>
+
 <body>
 
     <header>
-        <h1>WORDLE IT</h1>
+        <div id="ad-top-container" style="width: 100%; text-align: center; background: #1e2923; min-height: 50px;">
+            <span style="font-size: 10px; color: #5c635e;">PUBBLICITÀ</span>
+        </div>
+
+        <header>
+            <h1>WORDLE IT</h1>
+            <div id="streak-container" style="font-size: 1.2rem; color: var(--color-present); font-weight: bold;">
+                STREAK: <span id="current-streak">0</span> 🔥
+            </div>
+        </header>
     </header>
 
     <div id="message-container"></div>
@@ -483,14 +575,16 @@
                     <div class="stat-label">Win %</div>
                 </div>
             </div>
-            
+
             <div id="mini-board-container"></div>
-            
+
             <button id="play-again" onclick="resetGame()">GIOCA ANCORA</button>
         </div>
     </div>
 
     <script>
+        let currentStreak = localStorage.getItem('wordle_streak') || 0;
+        document.getElementById('current-streak').textContent = currentStreak;
         let DICTIONARY = [];
         let TARGET_WORD = "";
 
@@ -501,14 +595,14 @@
                 const response = await fetch("https://raw.githubusercontent.com/napolux/paroleitaliane/master/paroleitaliane/660000_parole_italiane.txt");
                 if (!response.ok) throw new Error("Errore di rete");
                 const text = await response.text();
-                
+
                 // Filter only 5-letter words with alphabetical characters
                 DICTIONARY = text.split('\n')
                     .map(word => word.trim().toUpperCase())
                     .filter(word => word.length === 5 && /^[A-Z]{5}$/.test(word));
-                
+
                 TARGET_WORD = DICTIONARY[Math.floor(Math.random() * DICTIONARY.length)];
-                
+
                 // Remove loading message
                 document.getElementById('message-container').innerHTML = '';
             } catch (error) {
@@ -581,7 +675,7 @@
                 const tile = board[currentR][currentC];
                 tile.textContent = letter;
                 tile.dataset.state = 'active';
-                
+
                 // Re-trigger the pop animation by cloning node
                 const newTile = tile.cloneNode(true);
                 tile.parentNode.replaceChild(newTile, tile);
@@ -619,14 +713,14 @@
 
             // Verify if word is valid Italian 5-letter word
             if (!/^[A-Z]{5}$/.test(guess)) {
-                 showMessage("Caratteri non validi");
-                 return;
+                showMessage("Caratteri non validi");
+                return;
             }
 
             if (!DICTIONARY.includes(guess)) {
-                 showMessage("Parola non nel dizionario");
-                 // animate shake could go here
-                 return;
+                showMessage("Parola non nel dizionario");
+                // animate shake could go here
+                return;
             }
 
             checkGuess(guess);
@@ -668,12 +762,12 @@
                 setTimeout(() => {
                     tile.style.animation = 'none';
                     tile.offsetHeight; /* trigger reflow */
-                    
-                    tile.style.animation = `flip-in ${animationDuration/2}ms ease-in forwards`;
-                    
+
+                    tile.style.animation = `flip-in ${animationDuration / 2}ms ease-in forwards`;
+
                     setTimeout(() => {
                         tile.classList.add(status);
-                        tile.style.animation = `flip-out-${status} ${animationDuration/2}ms ease-out forwards`;
+                        tile.style.animation = `flip-out-${status} ${animationDuration / 2}ms ease-out forwards`;
                         updateKeyboard(letter, status);
                     }, animationDuration / 2);
 
@@ -681,7 +775,7 @@
                     if (i === COLS - 1) {
                         setTimeout(() => {
                             isAnimating = false;
-                            
+
                             // Check win/lose conditions
                             if (guess === TARGET_WORD) {
                                 isGameOver = true;
@@ -706,8 +800,8 @@
             if (!keyEl) return;
 
             const currentStatus = keyEl.classList.contains('correct') ? 'correct' :
-                                  keyEl.classList.contains('present') ? 'present' :
-                                  keyEl.classList.contains('absent') ? 'absent' : 'tbd';
+                keyEl.classList.contains('present') ? 'present' :
+                    keyEl.classList.contains('absent') ? 'absent' : 'tbd';
 
             // correct overrides present, present overrides absent
             if (status === 'correct' || (status === 'present' && currentStatus !== 'correct') || (status === 'absent' && currentStatus !== 'correct' && currentStatus !== 'present')) {
@@ -746,29 +840,37 @@
         }
 
         function endGame(won) {
+            if (won) {
+                currentStreak++;
+            } else {
+                currentStreak = 0; // Se perdi, la streak si azzera
+            }
+            localStorage.setItem('wordle_streak', currentStreak);
+            document.getElementById('current-streak').textContent = currentStreak;
+
             stats.played++;
             if (won) stats.won++;
             sessionStorage.setItem('wordleStats', JSON.stringify(stats));
-            
+
             document.getElementById('stat-played').textContent = stats.played;
             document.getElementById('stat-won').textContent = stats.won;
-            
+
             let winPct = stats.played === 0 ? 0 : Math.round((stats.won / stats.played) * 100);
             document.getElementById('stat-winpct').textContent = winPct + '%';
-            
+
             // Generate mini board
             let miniBoardHTML = '';
             for (let r = 0; r <= currentR; r++) {
                 let rowStr = '';
                 for (let c = 0; c < COLS; c++) {
                     const status = board[r][c].classList.contains('correct') ? '🟩' :
-                                   board[r][c].classList.contains('present') ? '🟨' : '⬛';
+                        board[r][c].classList.contains('present') ? '🟨' : '⬛';
                     rowStr += status;
                 }
                 miniBoardHTML += `<div class="mini-board-line">${rowStr}</div>`;
             }
             document.getElementById('mini-board-container').innerHTML = miniBoardHTML;
-            
+
             document.getElementById('modal-title').textContent = won ? "Hai Vinto! 🎉" : "Sconfitta 😢";
             document.getElementById('modal-subtitle').textContent = won ? `Tentativo ${currentR + 1} di ${ROWS}` : `La parola era: ${TARGET_WORD}`;
             document.getElementById('message-container').innerHTML = ''; // clear messages
@@ -791,7 +893,7 @@
             document.querySelectorAll('.key').forEach(key => {
                 key.classList.remove('correct', 'present', 'absent');
             });
-            
+
             currentR = 0;
             currentC = 0;
             isGameOver = false;
@@ -804,4 +906,5 @@
 
     </script>
 </body>
+
 </html>
