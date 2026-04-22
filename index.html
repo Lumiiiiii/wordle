@@ -503,12 +503,15 @@
             <span style="font-size: 10px; color: #5c635e;">PUBBLICITÀ</span>
         </div>
 
-        <header>
-            <h1>WORDLE IT</h1>
+
+        <h1>WORDLE IT</h1>
+        <div style="display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap;">
             <div id="streak-container" style="font-size: 1.2rem; color: var(--color-present); font-weight: bold;">
                 STREAK: <span id="current-streak">0</span> 🔥
             </div>
-        </header>
+            <button onclick="mostraClassifica()" style="background: var(--color-key-bg); color: white; border: none; border-radius: 5px; padding: 5px 10px; cursor: pointer; font-family: inherit; font-size: 1rem;">🏆 TOP 10</button>
+        </div>
+
     </header>
 
     <div id="message-container"></div>
@@ -582,8 +585,25 @@
         </div>
     </div>
 
+    <!-- Leaderboard overlay -->
+    <div id="leaderboard-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 200; justify-content: center; align-items: center; backdrop-filter: blur(5px);">
+        <div style="background: #1a1b1d; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; border: 1px solid var(--color-border);">
+            <h2 style="color: var(--color-present); margin-top: 0;">🏆 TOP 10 GLOBALE</h2>
+            <div id="leaderboard-list" style="margin: 20px 0; text-align: left; font-size: 1.1rem;">
+                Caricamento...
+            </div>
+            <button onclick="chiudiClassifica()" style="background: var(--color-correct); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; font-family: inherit; font-size: 1rem;">CHIUDI</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        let currentStreak = localStorage.getItem('wordle_streak') || 0;
+        // Configurazione Supabase
+        const SUPABASE_URL = 'https://nejuxfvknaklivnobhht.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_e1No0FOt7NRiofrp2sEq8g_eVOKPq3n';
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        let currentStreak = parseInt(localStorage.getItem('wordle_streak')) || 0;
         document.getElementById('current-streak').textContent = currentStreak;
         let DICTIONARY = [];
         let TARGET_WORD = "";
@@ -839,17 +859,39 @@
             }
         }
 
-        function endGame(won) {
-            if (won) {
-                currentStreak++;
+        async function inviaPunteggio(nome, punteggio) {
+            const { data, error } = await _supabase
+                .from('classifica') // Assicurati che il nome sia identico a quello su Supabase
+                .insert([{ username: nome, streak: punteggio }]);
+
+            if (error) {
+                console.error("Errore di salvataggio:", error);
             } else {
-                currentStreak = 0; // Se perdi, la streak si azzera
+                console.log("Record salvato in classifica!");
             }
+        }
+
+        function endGame(won) {
+            stats.played++;
+            if (won) {
+                stats.won++;
+                currentStreak++; // Aumenta la scia di vittorie
+
+                // Chiediamo il nome solo se ha vinto (dopo un timeout per far vedere l'animazione)
+                setTimeout(() => {
+                    const nomeGiocatore = prompt("GRANDE! Hai vinto! Inserisci il tuo nome per la classifica globale:");
+                    if (nomeGiocatore) {
+                        inviaPunteggio(nomeGiocatore, currentStreak);
+                    }
+                }, 100);
+            } else {
+                currentStreak = 0; // Se perdi, la streak torna a zero
+            }
+
+            // Salviamo la streak locale per la prossima volta
             localStorage.setItem('wordle_streak', currentStreak);
             document.getElementById('current-streak').textContent = currentStreak;
 
-            stats.played++;
-            if (won) stats.won++;
             sessionStorage.setItem('wordleStats', JSON.stringify(stats));
 
             document.getElementById('stat-played').textContent = stats.played;
@@ -898,6 +940,37 @@
             currentC = 0;
             isGameOver = false;
             TARGET_WORD = DICTIONARY[Math.floor(Math.random() * DICTIONARY.length)];
+        }
+
+        async function mostraClassifica() {
+            const overlay = document.getElementById('leaderboard-overlay');
+            const list = document.getElementById('leaderboard-list');
+            overlay.style.display = 'flex';
+            list.innerHTML = "Caricamento...";
+
+            const { data, error } = await _supabase
+                .from('classifica')
+                .select('username, streak')
+                .order('streak', { ascending: false })
+                .limit(10);
+
+            if (error) {
+                list.innerHTML = "Errore nel caricamento.";
+                console.error(error);
+            } else if (!data || data.length === 0) {
+                list.innerHTML = "<p style='text-align:center; color:#888;'>Nessun punteggio ancora. Sii il primo!</p>";
+            } else {
+                list.innerHTML = data.map((player, index) => `
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding: 8px 0;">
+                        <span>${index + 1}. <strong>${player.username}</strong></span>
+                        <span style="color: var(--color-correct)">${player.streak} 🔥</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function chiudiClassifica() {
+            document.getElementById('leaderboard-overlay').style.display = 'none';
         }
 
         // Start
