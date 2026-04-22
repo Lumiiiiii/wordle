@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" href="favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3846257279396960"
-         crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
     <style>
         :root {
             --color-bg: #0f0f0f;
@@ -867,9 +867,12 @@
                         viewBox="0 0 24 24">
                         <path
                             d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.6 1.9 4.7 4.4 5.1.7 1.2 1.8 2.1 3.1 2.5V19H7v2h10v-2h-3.5v-3.4c1.3-.4 2.4-1.3 3.1-2.5C19.1 12.7 21 10.6 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.9C5.8 10.4 5 9.3 5 8zm14 0c0 1.3-.8 2.4-2 2.9V7h2v1z" />
-                    </svg></span> TOP 10</button>
+                    </svg></span> Classifica</button>
+            <a href="impiccato.html" class="btn-top10"
+                style="text-decoration:none;font-size:1rem;padding:8px 20px;background:linear-gradient(135deg,#e040fb,#ff5252);">Gioca
+                all'impiccato</a>
             <span id="nickname-display" class="nickname-display" onclick="cambiaNickname()"
-                title="Clicca per cambiare nickname"></span>
+                title="Clicca per cambiare nickname" style="font-size:1rem;color:#bbb;"></span>
         </div>
     </header>
 
@@ -962,7 +965,7 @@
             <h2><span class="icon icon-trophy" style="font-size:1.3em"><svg viewBox="0 0 24 24">
                         <path
                             d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.6 1.9 4.7 4.4 5.1.7 1.2 1.8 2.1 3.1 2.5V19H7v2h10v-2h-3.5v-3.4c1.3-.4 2.4-1.3 3.1-2.5C19.1 12.7 21 10.6 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.9C5.8 10.4 5 9.3 5 8zm14 0c0 1.3-.8 2.4-2 2.9V7h2v1z" />
-                    </svg></span> TOP 10 GLOBALE</h2>
+                    </svg></span> CLASSIFICA GLOBALE</h2>
             <div id="leaderboard-list">
                 Caricamento...
             </div>
@@ -1077,9 +1080,8 @@
             });
         });
 
-        // Fetch dictionary
+        // Fetch dictionary (caricamento silenzioso in background)
         async function loadDictionary() {
-            showMessage("Caricamento dizionario...", 0);
             try {
                 const response = await fetch("https://raw.githubusercontent.com/napolux/paroleitaliane/master/paroleitaliane/660000_parole_italiane.txt");
                 if (!response.ok) throw new Error("Errore di rete");
@@ -1090,7 +1092,6 @@
                     .filter(word => word.length === 5 && /^[A-Z]{5}$/.test(word));
 
                 TARGET_WORD = DICTIONARY[Math.floor(Math.random() * DICTIONARY.length)];
-                document.getElementById('message-container').innerHTML = '';
 
                 // Dopo il caricamento, chiedi nickname se mancante
                 chiediNicknamSeNecessario();
@@ -1445,8 +1446,7 @@
             const { data, error } = await _supabase
                 .from('classifica')
                 .select('username, streak, tempo_impiegato')
-                .order('streak', { ascending: false })
-                .limit(10);
+                .order('streak', { ascending: false });
 
             if (error) {
                 list.innerHTML = "<p style='text-align:center; color:#888;'>Errore nel caricamento.</p>";
