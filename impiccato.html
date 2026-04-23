@@ -714,6 +714,19 @@
   </div>
 
   <script>
+    // ─── TOGGLE VISIBILITÀ PAROLA SEGRETA ────────────────────────────────────────
+    function togglePassword() {
+      const input = document.getElementById('secret-word');
+      const btn   = document.getElementById('toggle-btn');
+      if (input.type === 'password') {
+        input.type    = 'text';
+        btn.innerText = '🔒';
+      } else {
+        input.type    = 'password';
+        btn.innerText = '👁️';
+      }
+    }
+
     // ─── DIZIONARIO (caricato online) ────────────────────────────────────────────
     let WORDS = [];
 
@@ -788,7 +801,10 @@
       player1 = document.getElementById('name-p1').value.trim() || 'Giocatore 1';
       player2 = document.getElementById('name-p2').value.trim() || 'Giocatore 2';
       document.getElementById('word-screen-title').textContent = player1 + ', inserisci la parola!';
-      document.getElementById('secret-word').value = '';
+      const secretInput = document.getElementById('secret-word');
+      secretInput.value = '';
+      secretInput.type  = 'password'; // Sempre nascosta all'inizio
+      document.getElementById('toggle-btn').innerText = '👁️';
       showScreen('word-screen');
     }
 
@@ -895,7 +911,10 @@
         const tmp = player1; player1 = player2; player2 = tmp;
         guesser = player2;
         document.getElementById('word-screen-title').textContent = player1 + ', inserisci la parola!';
-        document.getElementById('secret-word').value = '';
+        const secretInput = document.getElementById('secret-word');
+        secretInput.value = '';
+        secretInput.type  = 'password'; // Sempre nascosta
+        document.getElementById('toggle-btn').innerText = '👁️';
         showScreen('word-screen');
       }
     }
