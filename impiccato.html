@@ -180,6 +180,7 @@ header h1 {
     width:         100%;
     margin-bottom: 12px;
     text-align:    left;
+    position:      relative;
 }
 
 .field-group label {
@@ -193,7 +194,7 @@ header h1 {
 
 .field-input {
     width:         100%;
-    padding:       11px 14px;
+    padding:       11px 44px 11px 14px;
     border-radius: 10px;
     border:        1px solid rgba(108,99,255,0.3);
     background:    rgba(255,255,255,0.05);
@@ -611,6 +612,19 @@ header h1 {
 </div>
 
 <script>
+// ─── TOGGLE VISIBILITÀ PAROLA SEGRETA ────────────────────────────────────────
+function togglePassword() {
+    const input = document.getElementById('secret-word');
+    const btn   = document.getElementById('toggle-btn');
+    if (input.type === 'password') {
+        input.type   = 'text';
+        btn.innerText = '🔒';
+    } else {
+        input.type   = 'password';
+        btn.innerText = '👁️';
+    }
+}
+
 // ─── DIZIONARIO (caricato online) ────────────────────────────────────────────
 let WORDS = [];
 
@@ -685,7 +699,10 @@ function goToWordEntry() {
   player1 = document.getElementById('name-p1').value.trim() || 'Giocatore 1';
   player2 = document.getElementById('name-p2').value.trim() || 'Giocatore 2';
   document.getElementById('word-screen-title').textContent = player1 + ', inserisci la parola!';
-  document.getElementById('secret-word').value = '';
+  const secretInput = document.getElementById('secret-word');
+  secretInput.value = '';
+  secretInput.type  = 'password';  // Reimposta sempre nascosta
+  document.getElementById('toggle-btn').innerText = '👁️';
   showScreen('word-screen');
 }
 

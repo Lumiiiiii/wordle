@@ -1356,8 +1356,11 @@
             }
         }
 
-        // Upsert: aggiorna streak e tempo_impiegato se migliorano
-        async function inviaPunteggio(nome, punteggio, tempo) {
+        // Aggiorna streak e tempo come record personali INDIPENDENTI:
+        // - streak: si aggiorna solo se il nuovo valore è più alto del record attuale
+        // - tempo: si aggiorna solo se il nuovo tempo è più basso del record attuale
+        //   (indipendentemente dalla streak — il "tempo migliore" è sempre il migliore in assoluto)
+        async function inviaPunteggio(nome, nuovaStreak, nuovoTempo) {
             try {
                 const { data: existing, error: fetchError } = await _supabase
                     .from('classifica')
@@ -1371,24 +1374,35 @@
                 }
 
                 if (existing && existing.length > 0) {
+                    const record = existing[0];
                     const updates = {};
-                    if (punteggio > existing[0].streak) updates.streak = punteggio;
-                    const prevTempo = existing[0].tempo_impiegato;
-                    if (prevTempo === null || prevTempo === undefined || tempo < prevTempo) {
-                        updates.tempo_impiegato = tempo;
+
+                    // Streak: aggiorna solo se è un nuovo massimo
+                    if (nuovaStreak > record.streak) {
+                        updates.streak = nuovaStreak;
                     }
+
+                    // Tempo: aggiorna solo se è un nuovo minimo (record indipendente dalla streak)
+                    const tempoAttuale = record.tempo_impiegato;
+                    if (tempoAttuale === null || tempoAttuale === undefined || nuovoTempo < tempoAttuale) {
+                        updates.tempo_impiegato = nuovoTempo;
+                    }
+
                     if (Object.keys(updates).length > 0) {
                         const { error: updateError } = await _supabase
                             .from('classifica')
                             .update(updates)
-                            .eq('id', existing[0].id);
+                            .eq('id', record.id);
                         if (updateError) console.error("Errore aggiornamento:", updateError);
                         else console.log("Record aggiornato:", updates);
+                    } else {
+                        console.log("Nessun record migliorato, nessun aggiornamento.");
                     }
                 } else {
+                    // Primo inserimento
                     const { error: insertError } = await _supabase
                         .from('classifica')
-                        .insert([{ username: nome, streak: punteggio, tempo_impiegato: tempo }]);
+                        .insert([{ username: nome, streak: nuovaStreak, tempo_impiegato: nuovoTempo }]);
                     if (insertError) console.error("Errore di salvataggio:", insertError);
                     else console.log("Nuovo record salvato!");
                 }
