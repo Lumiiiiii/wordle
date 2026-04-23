@@ -644,13 +644,16 @@
         nascosta.</p>
       <div class="field-group">
         <label>Parola segreta (solo lettere, niente numeri)</label>
-        <input class="field-input" id="secret-word" type="password" placeholder="Scrivi qui..." maxlength="20"
-          autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <div style="position: relative;">
+          <input class="field-input" id="secret-word" type="password" placeholder="Scrivi qui..." maxlength="20"
+            autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+            onkeydown="event.stopPropagation()">
+          <button type="button" onclick="togglePassword()" id="toggle-btn"
+            style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1.2rem; color: #aaa; line-height: 1; padding: 0;">
+            👁️
+          </button>
+        </div>
         <div class="secret-hint">La parola verrà nascosta mentre scrivi.</div>
-        <button type="button" onclick="togglePassword()" id="toggle-btn"
-          style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1.2rem;">
-          👁️
-        </button>
       </div>
       <button class="btn-primary" onclick="startTwoPlayer()">INIZIA IL GIOCO</button>
     </div>
@@ -925,6 +928,8 @@
 
     // ─── TASTIERA FISICA ─────────────────────────────────────────────────────────
     document.addEventListener('keydown', e => {
+      // Ignora se il focus è sul campo della parola segreta
+      if (document.activeElement === document.getElementById('secret-word')) return;
       if (/^[a-zA-Z]$/.test(e.key)) guess(e.key.toUpperCase());
     });
 
