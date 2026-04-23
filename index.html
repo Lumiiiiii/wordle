@@ -1376,18 +1376,11 @@
                 if (existing && existing.length > 0) {
                     const record = existing[0];
                     const updates = {};
-
-                    // Streak: aggiorna solo se è un nuovo massimo
-                    if (nuovaStreak > record.streak) {
-                        updates.streak = nuovaStreak;
+                    if (punteggio > existing[0].streak) updates.streak = punteggio;
+                    const prevTempo = existing[0].tempo_impiegato;
+                    if (prevTempo === null || prevTempo === undefined || tempo < prevTempo) {
+                        updates.tempo_impiegato = tempo;
                     }
-
-                    // Tempo: aggiorna solo se è un nuovo minimo (record indipendente dalla streak)
-                    const tempoAttuale = record.tempo_impiegato;
-                    if (tempoAttuale === null || tempoAttuale === undefined || nuovoTempo < tempoAttuale) {
-                        updates.tempo_impiegato = nuovoTempo;
-                    }
-
                     if (Object.keys(updates).length > 0) {
                         const { error: updateError } = await _supabase
                             .from('classifica')
