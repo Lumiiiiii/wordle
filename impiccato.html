@@ -649,8 +649,11 @@
             autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
             onkeydown="event.stopPropagation()">
           <button type="button" onclick="togglePassword()" id="toggle-btn"
-            style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1.2rem; color: #aaa; line-height: 1; padding: 0;">
-            👁️
+            style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1.2rem; color: #aaa; line-height: 1; padding: 0; display:flex;align-items:center;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+            </svg>
           </button>
         </div>
         <div class="secret-hint">La parola verrà nascosta mentre scrivi.</div>
@@ -718,15 +721,18 @@
 
   <script>
     // ─── TOGGLE VISIBILITÀ PAROLA SEGRETA ────────────────────────────────────────
+    const SVG_EYE  = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>`;
+    const SVG_LOCK = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/></svg>`;
+
     function togglePassword() {
       const input = document.getElementById('secret-word');
-      const btn   = document.getElementById('toggle-btn');
+      const btn = document.getElementById('toggle-btn');
       if (input.type === 'password') {
-        input.type    = 'text';
-        btn.innerText = '🔒';
+        input.type = 'text';
+        btn.innerHTML = SVG_LOCK;
       } else {
-        input.type    = 'password';
-        btn.innerText = '👁️';
+        input.type = 'password';
+        btn.innerHTML = SVG_EYE;
       }
     }
 
@@ -806,8 +812,8 @@
       document.getElementById('word-screen-title').textContent = player1 + ', inserisci la parola!';
       const secretInput = document.getElementById('secret-word');
       secretInput.value = '';
-      secretInput.type  = 'password'; // Sempre nascosta all'inizio
-      document.getElementById('toggle-btn').innerText = '👁️';
+      secretInput.type = 'password'; // Sempre nascosta all'inizio
+      document.getElementById('toggle-btn').innerHTML = SVG_EYE;
       showScreen('word-screen');
     }
 
@@ -916,8 +922,8 @@
         document.getElementById('word-screen-title').textContent = player1 + ', inserisci la parola!';
         const secretInput = document.getElementById('secret-word');
         secretInput.value = '';
-        secretInput.type  = 'password'; // Sempre nascosta
-        document.getElementById('toggle-btn').innerText = '👁️';
+        secretInput.type = 'password'; // Sempre nascosta
+        document.getElementById('toggle-btn').innerHTML = SVG_EYE;
         showScreen('word-screen');
       }
     }
