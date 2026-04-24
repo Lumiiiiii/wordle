@@ -624,11 +624,11 @@
       <div id="fields-2p" style="display:none">
         <div class="field-group">
           <label>Nome Giocatore 1 (sceglie la parola)</label>
-          <input class="field-input" id="name-p1" type="text" placeholder="Es. Mario" maxlength="20" autocomplete="off">
+          <input class="field-input" id="name-p1" type="text" placeholder="Es. Mario" maxlength="20" autocomplete="off" onkeydown="if(event.key==='Enter') event.preventDefault()">
         </div>
         <div class="field-group">
           <label>Nome Giocatore 2 (indovina)</label>
-          <input class="field-input" id="name-p2" type="text" placeholder="Es. Luigi" maxlength="20" autocomplete="off">
+          <input class="field-input" id="name-p2" type="text" placeholder="Es. Luigi" maxlength="20" autocomplete="off" onkeydown="if(event.key==='Enter') event.preventDefault()">
         </div>
         <button class="btn-primary" onclick="goToWordEntry()">AVANTI</button>
       </div>
@@ -775,6 +775,7 @@
     let maxErrors = 7;
     let gameOver = false;
     let lastSetup = null;
+    let lastWin = false; // true = il guesser ha vinto l'ultima partita
 
     const BODY_PARTS = ['hp-head', 'hp-body', 'hp-la', 'hp-ra', 'hp-ll', 'hp-rl', 'hp-lf', 'hp-rf'];
     const KB_ROWS = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
@@ -897,6 +898,7 @@
 
     function endGame(win) {
       gameOver = true;
+      lastWin = win;
       const card = document.getElementById('end-card');
       card.className = 'end-card ' + (win ? 'win' : 'lose');
       document.getElementById('end-title').textContent = win ? 'Hai vinto!' : 'Hai perso!';
@@ -916,13 +918,16 @@
         secretWord = word.toUpperCase();
         initGame();
       } else {
-        // Inverti i ruoli
-        const tmp = player1; player1 = player2; player2 = tmp;
+        // Se il guesser ha vinto → si invertono i ruoli
+        // Se il guesser ha perso  → i ruoli rimangono uguali (stesso scrittore, stesso guesser)
+        if (lastWin) {
+          const tmp = player1; player1 = player2; player2 = tmp;
+        }
         guesser = player2;
         document.getElementById('word-screen-title').textContent = player1 + ', inserisci la parola!';
         const secretInput = document.getElementById('secret-word');
         secretInput.value = '';
-        secretInput.type = 'password'; // Sempre nascosta
+        secretInput.type = 'password';
         document.getElementById('toggle-btn').innerHTML = SVG_EYE;
         showScreen('word-screen');
       }
