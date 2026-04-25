@@ -1,813 +1,1030 @@
 <!DOCTYPE html>
 <html lang="it">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Impiccato IT — Gioco dell'Impiccato</title>
-<link rel="icon" type="image/png" href="favicon.png">
-<link rel="apple-touch-icon" href="favicon.png">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3846257279396960" crossorigin="anonymous"></script>
-<style>
 
-/* ============================================================
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Impiccato IT — Gioco dell'Impiccato</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3846257279396960"
+    crossorigin="anonymous"></script>
+  <style>
+    /* ============================================================
    VARIABILI COLORE — modifica qui per cambiare il tema
    ============================================================ */
-:root {
-    --bg:           #0f0f0f;          /* sfondo pagina               */
-    --bg-header:    #1a1a2e;          /* sfondo header               */
-    --text:         #eaeaea;          /* testo principale            */
-    --accent:       #6c63ff;          /* viola principale            */
-    --accent-glow:  rgba(108,99,255,0.4);
-    --correct:      #538d4e;          /* lettera indovinata (verde)  */
-    --wrong:        #c0392b;          /* errore (rosso)              */
-    --border:       rgba(255,255,255,0.12);
-    --font:         'Inter', sans-serif;
-}
+    :root {
+      --bg: #0f0f0f;
+      /* sfondo pagina               */
+      --bg-header: #1a1a2e;
+      /* sfondo header               */
+      --text: #eaeaea;
+      /* testo principale            */
+      --accent: #6c63ff;
+      /* viola principale            */
+      --accent-glow: rgba(108, 99, 255, 0.4);
+      --correct: #538d4e;
+      /* lettera indovinata (verde)  */
+      --wrong: #c0392b;
+      /* errore (rosso)              */
+      --border: rgba(255, 255, 255, 0.12);
+      --font: 'Inter', sans-serif;
+    }
 
-/* ============================================================
+    /* ============================================================
    RESET & BASE
    ============================================================ */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-body {
-    background:      var(--bg);
-    color:           var(--text);
-    font-family:     var(--font);
-    min-height:      100vh;
-    display:         flex;
-    flex-direction:  column;
-    align-items:     center;
-    overflow-x:      hidden;
-}
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
 
-/* ============================================================
+    /* ============================================================
    HEADER
    ============================================================ */
-header {
-    width:          100%;
-    background:     var(--bg-header);
-    padding:        10px 16px 8px;
-    text-align:     center;
-    box-shadow:     0 2px 20px rgba(0,0,0,0.5);
-    border-bottom:  1px solid rgba(255,255,255,0.06);
-    flex-shrink:    0;
-}
+    header {
+      width: 100%;
+      background: var(--bg-header);
+      padding: 10px 16px 8px;
+      text-align: center;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      flex-shrink: 0;
+    }
 
-header h1 {
-    font-size:    26px;
-    letter-spacing: 5px;
-    font-weight:  800;
-    background:   linear-gradient(135deg, #6c63ff, #e040fb, #ff5252);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin:       4px 0;
-}
+    header h1 {
+      font-size: 26px;
+      letter-spacing: 5px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #6c63ff, #e040fb, #ff5252);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 4px 0;
+    }
 
-.header-bar {
-    display:         flex;
-    gap:             12px;
-    justify-content: center;
-    align-items:     center;
-    flex-wrap:       wrap;
-    padding:         6px 0 4px;
-}
+    .header-bar {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 6px 0 4px;
+    }
 
-/* Pulsante "Passa a Wordle" */
-.btn-switch {
-    background:      linear-gradient(135deg, var(--accent), #8b5cf6);
-    color:           #fff;
-    border:          none;
-    border-radius:   20px;
-    padding:         8px 22px;
-    cursor:          pointer;
-    font-family:     inherit;
-    font-size:       0.9rem;
-    font-weight:     700;
-    letter-spacing:  0.5px;
-    transition:      all 0.2s;
-    box-shadow:      0 2px 10px var(--accent-glow);
-    text-decoration: none;
-    display:         inline-flex;
-    align-items:     center;
-    gap:             6px;
-}
+    /* Pulsante "Passa a Wordle" */
+    .btn-switch {
+      background: linear-gradient(135deg, var(--accent), #8b5cf6);
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 22px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      transition: all 0.2s;
+      box-shadow: 0 2px 10px var(--accent-glow);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-.btn-switch:hover {
-    transform:  translateY(-1px);
-    box-shadow: 0 4px 15px var(--accent-glow);
-}
+    .btn-switch:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px var(--accent-glow);
+    }
 
-/* ============================================================
+    /* ============================================================
    SISTEMA SCHERMATE (loading / setup / gioco / fine)
    ============================================================ */
-.screen {
-    display:         none;          /* nascosta di default */
-    width:           100%;
-    max-width:       520px;
-    padding:         24px 16px;
-    flex-direction:  column;
-    align-items:     center;
-    gap:             16px;
-}
+    .screen {
+      display: none;
+      /* nascosta di default */
+      width: 100%;
+      max-width: 520px;
+      padding: 24px 16px;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
 
-.screen.active {
-    display: flex;                  /* visibile quando attiva */
-}
+    .screen.active {
+      display: flex;
+      /* visibile quando attiva */
+    }
 
-/* ============================================================
+    /* ============================================================
    CARD GENERICA (setup, loading, fine partita)
    ============================================================ */
-.setup-card {
-    background:    linear-gradient(160deg, #1c1c2e, #1a1a1a);
-    border:        1px solid rgba(108,99,255,0.2);
-    border-radius: 20px;
-    padding:       30px 24px;
-    width:         100%;
-    text-align:    center;
-    box-shadow:    0 20px 60px rgba(0,0,0,0.5);
-}
+    .setup-card {
+      background: linear-gradient(160deg, #1c1c2e, #1a1a1a);
+      border: 1px solid rgba(108, 99, 255, 0.2);
+      border-radius: 20px;
+      padding: 30px 24px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
 
-.setup-card h2 {
-    font-size:   1.4rem;
-    background:  linear-gradient(135deg, #6c63ff, #e040fb);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 18px;
-}
+    .setup-card h2 {
+      font-size: 1.4rem;
+      background: linear-gradient(135deg, #6c63ff, #e040fb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 18px;
+    }
 
-/* ============================================================
+    /* ============================================================
    SCELTA MODALITA' (1 giocatore / 2 giocatori)
    ============================================================ */
-.mode-btns {
-    display:         flex;
-    gap:             12px;
-    justify-content: center;
-    margin-bottom:   20px;
-    flex-wrap:       wrap;
-}
+    .mode-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
 
-.mode-btn {
-    padding:       10px 24px;
-    border-radius: 12px;
-    border:        2px solid rgba(108,99,255,0.3);
-    background:    rgba(108,99,255,0.08);
-    color:         #fff;
-    font-family:   inherit;
-    font-size:     1rem;
-    font-weight:   700;
-    cursor:        pointer;
-    transition:    all 0.2s;
-}
+    .mode-btn {
+      padding: 10px 24px;
+      border-radius: 12px;
+      border: 2px solid rgba(108, 99, 255, 0.3);
+      background: rgba(108, 99, 255, 0.08);
+      color: #fff;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
 
-.mode-btn.selected,
-.mode-btn:hover {
-    border-color: var(--accent);
-    background:   rgba(108,99,255,0.25);
-    box-shadow:   0 0 15px var(--accent-glow);
-}
+    .mode-btn.selected,
+    .mode-btn:hover {
+      border-color: var(--accent);
+      background: rgba(108, 99, 255, 0.25);
+      box-shadow: 0 0 15px var(--accent-glow);
+    }
 
-/* ============================================================
+    /* ============================================================
    CAMPI INPUT (nome giocatore, parola segreta)
    ============================================================ */
-.field-group {
-    width:         100%;
-    margin-bottom: 12px;
-    text-align:    left;
-}
+    .field-group {
+      width: 100%;
+      margin-bottom: 12px;
+      text-align: left;
+    }
 
-.field-group label {
-    font-size:      0.8rem;
-    color:          #999;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom:  5px;
-    display:        block;
-}
+    .field-group label {
+      font-size: 0.8rem;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 5px;
+      display: block;
+    }
 
-.field-input {
-    width:         100%;
-    padding:       11px 14px;
-    border-radius: 10px;
-    border:        1px solid rgba(108,99,255,0.3);
-    background:    rgba(255,255,255,0.05);
-    color:         #eee;
-    font-family:   inherit;
-    font-size:     1rem;
-    font-weight:   600;
-    outline:       none;
-    transition:    border-color 0.2s;
-}
+    .field-input {
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(108, 99, 255, 0.3);
+      background: rgba(255, 255, 255, 0.05);
+      color: #eee;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      outline: none;
+      transition: border-color 0.2s;
+    }
 
-.field-input:focus {
-    border-color: var(--accent);
-    box-shadow:   0 0 12px var(--accent-glow);
-}
+    .field-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
 
-.field-input::placeholder {
-    color: #555;
-}
+    .field-input::placeholder {
+      color: #555;
+    }
 
-/* ============================================================
+    /* ============================================================
    PULSANTI
    ============================================================ */
 
-/* Pulsante principale (viola gradiente) */
-.btn-primary {
-    width:          100%;
-    padding:        13px;
-    border-radius:  12px;
-    border:         none;
-    background:     linear-gradient(135deg, var(--accent), #8b5cf6);
-    color:          #fff;
-    font-family:    inherit;
-    font-size:      1.05rem;
-    font-weight:    700;
-    cursor:         pointer;
-    transition:     all 0.2s;
-    box-shadow:     0 4px 20px var(--accent-glow);
-    letter-spacing: 0.5px;
-}
+    /* Pulsante principale (viola gradiente) */
+    .btn-primary {
+      width: 100%;
+      padding: 13px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, var(--accent), #8b5cf6);
+      color: #fff;
+      font-family: inherit;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 20px var(--accent-glow);
+      letter-spacing: 0.5px;
+    }
 
-.btn-primary:hover  { transform: translateY(-2px); box-shadow: 0 6px 25px var(--accent-glow); }
-.btn-primary:active { transform: translateY(1px); }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px var(--accent-glow);
+    }
 
-/* Pulsante secondario (bordato trasparente) */
-.btn-secondary {
-    width:         100%;
-    padding:       12px;
-    border-radius: 12px;
-    border:        1px solid rgba(255,255,255,0.15);
-    background:    rgba(255,255,255,0.05);
-    color:         #ccc;
-    font-family:   inherit;
-    font-size:     1rem;
-    font-weight:   700;
-    cursor:        pointer;
-    transition:    all 0.2s;
-}
+    .btn-primary:active {
+      transform: translateY(1px);
+    }
 
-.btn-secondary:hover {
-    background: rgba(255,255,255,0.1);
-    color:      #fff;
-}
+    /* Pulsante secondario (bordato trasparente) */
+    .btn-secondary {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.05);
+      color: #ccc;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
 
-/* ============================================================
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    /* ============================================================
    ETICHETTE MINORI
    ============================================================ */
-.step-label   { font-size: 0.85rem; color: #888; margin-bottom: 4px; }
-.secret-hint  { font-size: 0.78rem; color: #555; margin-top: 6px; }
+    .step-label {
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 4px;
+    }
 
-/* ============================================================
+    .secret-hint {
+      font-size: 0.78rem;
+      color: #555;
+      margin-top: 6px;
+    }
+
+    /* ============================================================
    SCHERMATA DI GIOCO — barra superiore
    ============================================================ */
-.game-top {
-    width:           100%;
-    max-width:       520px;
-    display:         flex;
-    justify-content: space-between;
-    align-items:     center;
-    padding:         0 16px;
-    flex-wrap:       wrap;
-    gap:             8px;
-}
+    .game-top {
+      width: 100%;
+      max-width: 520px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 16px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
 
-.player-info      { font-size: 0.9rem; color: #aaa; font-weight: 600; }
-.player-info span { color: var(--accent); }
-.errors-info      { font-size: 0.9rem; font-weight: 700; color: var(--wrong); }
+    .player-info {
+      font-size: 0.9rem;
+      color: #aaa;
+      font-weight: 600;
+    }
 
-/* ============================================================
+    .player-info span {
+      color: var(--accent);
+    }
+
+    .errors-info {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--wrong);
+    }
+
+    /* ============================================================
    DISEGNO IMPICCATO (SVG)
    ============================================================ */
-.hangman-wrap {
-    width:      200px;
-    height:     180px;
-    flex-shrink: 0;
-}
+    .hangman-wrap {
+      width: 200px;
+      height: 180px;
+      flex-shrink: 0;
+    }
 
-#hangman-svg { width: 100%; height: 100%; }
+    #hangman-svg {
+      width: 100%;
+      height: 100%;
+    }
 
-/* Struttura (forca) — sempre visibile */
-.gallows {
-    stroke:           #555;
-    stroke-width:     3;
-    fill:             none;
-    stroke-linecap:   round;
-}
+    /* Struttura (forca) — sempre visibile */
+    .gallows {
+      stroke: #555;
+      stroke-width: 3;
+      fill: none;
+      stroke-linecap: round;
+    }
 
-/* Parti del corpo — appaiono ad ogni errore */
-.body-part {
-    stroke:         #e040fb;
-    stroke-width:   3;
-    fill:           none;
-    stroke-linecap: round;
-    opacity:        0;
-    transition:     opacity 0.3s;
-}
+    /* Parti del corpo — appaiono ad ogni errore */
+    .body-part {
+      stroke: #e040fb;
+      stroke-width: 3;
+      fill: none;
+      stroke-linecap: round;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
 
-/* ============================================================
+    /* ============================================================
    DISPLAY PAROLA (le caselle _ _ _ )
    ============================================================ */
-.word-display {
-    display:         flex;
-    gap:             8px;
-    flex-wrap:       wrap;
-    justify-content: center;
-    padding:         8px 16px;
-}
+    .word-display {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 8px 16px;
+    }
 
-.letter-box {
-    width:          38px;
-    height:         44px;
-    border-bottom:  3px solid #555;
-    display:        flex;
-    align-items:    center;
-    justify-content: center;
-    font-size:      1.4rem;
-    font-weight:    800;
-    text-transform: uppercase;
-    transition:     all 0.3s;
-    color:          #fff;
-}
+    .letter-box {
+      width: 38px;
+      height: 44px;
+      border-bottom: 3px solid #555;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      transition: all 0.3s;
+      color: #fff;
+    }
 
-/* Lettera indovinata */
-.letter-box.revealed {
-    border-color: var(--correct);
-    color:        var(--correct);
-    animation:    popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
+    /* Lettera indovinata */
+    .letter-box.revealed {
+      border-color: var(--correct);
+      color: var(--correct);
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
 
-/* Spazio tra parole (modalità 2P) */
-.letter-box.space {
-    border-bottom: none;
-    width:         20px;
-}
+    /* Spazio tra parole (modalità 2P) */
+    .letter-box.space {
+      border-bottom: none;
+      width: 20px;
+    }
 
-/* ============================================================
+    /* ============================================================
    LETTERE SBAGLIATE
    ============================================================ */
-.wrong-letters {
-    font-size:      0.9rem;
-    color:          var(--wrong);
-    letter-spacing: 3px;
-    font-weight:    700;
-    min-height:     22px;
-    text-align:     center;
-    padding:        0 16px;
-}
+    .wrong-letters {
+      font-size: 0.9rem;
+      color: var(--wrong);
+      letter-spacing: 3px;
+      font-weight: 700;
+      min-height: 22px;
+      text-align: center;
+      padding: 0 16px;
+    }
 
-/* ============================================================
+    /* ============================================================
    TASTIERA ON-SCREEN
    ============================================================ */
-#imp-keyboard {
-    width:         100%;
-    max-width:     500px;
-    padding:       6px;
-    display:       flex;
-    flex-direction: column;
-    gap:           5px;
-    margin-bottom: max(10px, env(safe-area-inset-bottom));
-}
+    #imp-keyboard {
+      width: 100%;
+      max-width: 500px;
+      padding: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: max(10px, env(safe-area-inset-bottom));
+    }
 
-.kb-row {
-    display:         flex;
-    justify-content: center;
-    gap:             4px;
-}
+    .kb-row {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+    }
 
-.kb-key {
-    font-family:              inherit;
-    font-weight:              700;
-    border:                   0;
-    padding:                  0;
-    height:                   clamp(40px, 6vh, 50px);
-    border-radius:            6px;
-    cursor:                   pointer;
-    background:               #818384;
-    color:                    #fff;
-    flex:                     1;
-    max-width:                42px;
-    display:                  flex;
-    justify-content:          center;
-    align-items:              center;
-    text-transform:           uppercase;
-    font-size:                clamp(0.85rem, 3vw, 1.1rem);
-    transition:               all 0.15s;
-    touch-action:             manipulation;
-    -webkit-tap-highlight-color: transparent;
-    box-shadow:               0 2px 0 rgba(0,0,0,0.35);
-}
+    .kb-key {
+      font-family: inherit;
+      font-weight: 700;
+      border: 0;
+      padding: 0;
+      height: clamp(40px, 6vh, 50px);
+      border-radius: 6px;
+      cursor: pointer;
+      background: #818384;
+      color: #fff;
+      flex: 1;
+      max-width: 42px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-transform: uppercase;
+      font-size: clamp(0.85rem, 3vw, 1.1rem);
+      transition: all 0.15s;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
+    }
 
-.kb-key:active  { transform: translateY(2px); box-shadow: none; }
-.kb-key.hit     { background: var(--correct); box-shadow: 0 2px 0 rgba(0,0,0,0.4); }
-.kb-key.miss    { background: #3a3a3c;        box-shadow: 0 2px 0 rgba(0,0,0,0.4); }
-.kb-key:disabled { opacity: 0.5; cursor: default; }
+    .kb-key:active {
+      transform: translateY(2px);
+      box-shadow: none;
+    }
 
-/* ============================================================
+    .kb-key.hit {
+      background: var(--correct);
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
+    }
+
+    .kb-key.miss {
+      background: #3a3a3c;
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
+    }
+
+    .kb-key:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    /* ============================================================
    SCHERMATA FINE PARTITA
    ============================================================ */
-.end-card {
-    background:    linear-gradient(160deg, #1c1c2e, #1a1a1a);
-    border:        1px solid rgba(108,99,255,0.2);
-    border-radius: 20px;
-    padding:       32px 24px;
-    width:         100%;
-    text-align:    center;
-    box-shadow:    0 20px 60px rgba(0,0,0,0.5);
-}
+    .end-card {
+      background: linear-gradient(160deg, #1c1c2e, #1a1a1a);
+      border: 1px solid rgba(108, 99, 255, 0.2);
+      border-radius: 20px;
+      padding: 32px 24px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
 
-.end-card h2 { font-size: 2rem; margin-bottom: 8px; }
+    .end-card h2 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
 
-/* Vittoria */
-.end-card.win h2 {
-    background:  linear-gradient(135deg, #538d4e, #6dd56b);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
+    /* Vittoria */
+    .end-card.win h2 {
+      background: linear-gradient(135deg, #538d4e, #6dd56b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-/* Sconfitta */
-.end-card.lose h2 {
-    background:  linear-gradient(135deg, #c0392b, #ff6b6b);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
+    /* Sconfitta */
+    .end-card.lose h2 {
+      background: linear-gradient(135deg, #c0392b, #ff6b6b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-.end-word {
-    font-size:      1.3rem;
-    letter-spacing: 4px;
-    font-weight:    800;
-    color:          #fff;
-    margin:         12px 0 6px;
-    text-transform: uppercase;
-}
+    .end-word {
+      font-size: 1.3rem;
+      letter-spacing: 4px;
+      font-weight: 800;
+      color: #fff;
+      margin: 12px 0 6px;
+      text-transform: uppercase;
+    }
 
-.end-sub  { color: #888; font-size: 0.9rem; margin-bottom: 20px; }
-.end-btns { display: flex; flex-direction: column; gap: 10px; }
+    .end-sub {
+      color: #888;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
 
-/* ============================================================
+    .end-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* ============================================================
    FOOTER
    ============================================================ */
-.footer-links {
-    display:         flex;
-    justify-content: center;
-    gap:             15px;
-    padding:         10px 0;
-    font-size:       0.75rem;
-    color:           #666;
-    flex-shrink:     0;
-}
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      padding: 10px 0;
+      font-size: 0.75rem;
+      color: #666;
+      flex-shrink: 0;
+    }
 
-.footer-links a       { color: #888; text-decoration: none; transition: color 0.2s; }
-.footer-links a:hover { color: var(--accent); }
+    .footer-links a {
+      color: #888;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
 
-/* ============================================================
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    /* ============================================================
    ANIMAZIONI
    ============================================================ */
-@keyframes popIn {
-    0%   { transform: scale(0.5); opacity: 0; }
-    100% { transform: scale(1);   opacity: 1; }
-}
+    @keyframes popIn {
+      0% {
+        transform: scale(0.5);
+        opacity: 0;
+      }
 
-@keyframes shake {
-    0%, 100%  { transform: translateX(0); }
-    20%, 60%  { transform: translateX(-6px); }
-    40%, 80%  { transform: translateX(6px); }
-}
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
 
-.shake { animation: shake 0.4s ease; }
-</style>
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      20%,
+      60% {
+        transform: translateX(-6px);
+      }
+
+      40%,
+      80% {
+        transform: translateX(6px);
+      }
+    }
+
+    .shake {
+      animation: shake 0.4s ease;
+    }
+
+    /* ============================================================
+   WIN ANIMATION — Coriandoli
+   ============================================================ */
+    #confetti-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      overflow: hidden;
+    }
+
+    .confetti-piece {
+      position: absolute;
+      top: -20px;
+      animation: confettiFall linear forwards;
+    }
+
+    @keyframes confettiFall {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+      80%  { opacity: 1; }
+      100% { transform: translateY(110vh) rotate(780deg); opacity: 0; }
+    }
+
+    @keyframes winPop {
+      0%   { transform: scale(1); }
+      35%  { transform: scale(1.45); color: #6dd56b; border-color: #6dd56b; }
+      65%  { transform: scale(0.92); }
+      100% { transform: scale(1); color: #6dd56b; border-color: #6dd56b; }
+    }
+  </style>
 </head>
+
 <body>
 
-<header>
-  <h1>IMPICCATO IT</h1>
-  <div class="header-bar">
-    <a href="index.html" class="btn-switch">Passa a Wordle</a>
-  </div>
-</header>
-
-<!-- LOADING SCREEN -->
-<div class="screen active" id="loading-screen">
-  <div class="setup-card" style="text-align:center">
-    <div id="loading-spinner" style="font-size:2.5rem;margin-bottom:16px">...</div>
-    <h2 style="margin-bottom:10px">Caricamento dizionario...</h2>
-    <p style="color:#888;font-size:.9rem">Download parole italiane in corso</p>
-    <div id="loading-error" style="display:none;color:#c0392b;margin-top:16px;font-size:.9rem"></div>
-    <button id="loading-retry" class="btn-primary" style="display:none;margin-top:16px" onclick="loadDictionary()">Riprova</button>
-  </div>
-</div>
-
-<!-- SETUP SCREEN -->
-<div class="screen" id="setup-screen">
-  <div class="setup-card">
-    <h2>Scegli la modalità</h2>
-    <div class="mode-btns">
-      <button class="mode-btn selected" id="btn-1p" onclick="setMode(1)">1 Giocatore</button>
-      <button class="mode-btn" id="btn-2p" onclick="setMode(2)">2 Giocatori</button>
+  <header>
+    <h1>IMPICCATO IT</h1>
+    <div class="header-bar">
+      <a href="wordle.html" class="btn-switch">Passa a Wordle</a>
     </div>
+  </header>
 
-    <!-- 1P fields -->
-    <div id="fields-1p">
-      <div class="field-group">
-        <label>Il tuo nome</label>
-        <input class="field-input" id="name-1p" type="text" placeholder="Es. Mario" maxlength="20" autocomplete="off">
+  <!-- LOADING SCREEN -->
+  <div class="screen active" id="loading-screen">
+    <div class="setup-card" style="text-align:center">
+      <div id="loading-spinner" style="font-size:2.5rem;margin-bottom:16px">...</div>
+      <h2 style="margin-bottom:10px">Caricamento dizionario...</h2>
+      <p style="color:#888;font-size:.9rem">Download parole italiane in corso</p>
+      <div id="loading-error" style="display:none;color:#c0392b;margin-top:16px;font-size:.9rem"></div>
+      <button id="loading-retry" class="btn-primary" style="display:none;margin-top:16px"
+        onclick="loadDictionary()">Riprova</button>
+    </div>
+  </div>
+
+  <!-- SETUP SCREEN -->
+  <div class="screen" id="setup-screen">
+    <div class="setup-card">
+      <h2>Scegli la modalità</h2>
+      <div class="mode-btns">
+        <button class="mode-btn selected" id="btn-1p" onclick="setMode(1)">1 Giocatore</button>
+        <button class="mode-btn" id="btn-2p" onclick="setMode(2)">2 Giocatori</button>
       </div>
-      <button class="btn-primary" onclick="startSinglePlayer()">INIZIA</button>
-    </div>
 
-    <!-- 2P fields -->
-    <div id="fields-2p" style="display:none">
-      <div class="field-group">
-        <label>Nome Giocatore 1 (sceglie la parola)</label>
-        <input class="field-input" id="name-p1" type="text" placeholder="Es. Mario" maxlength="20" autocomplete="off">
+      <!-- 1P fields -->
+      <div id="fields-1p">
+        <div class="field-group">
+          <label>Il tuo nome</label>
+          <input class="field-input" id="name-1p" type="text" placeholder="Es. Mario" maxlength="20" autocomplete="off">
+        </div>
+        <button class="btn-primary" onclick="startSinglePlayer()">INIZIA</button>
       </div>
-      <div class="field-group">
-        <label>Nome Giocatore 2 (indovina)</label>
-        <input class="field-input" id="name-p2" type="text" placeholder="Es. Luigi" maxlength="20" autocomplete="off">
+
+      <!-- 2P fields -->
+      <div id="fields-2p" style="display:none">
+        <div class="field-group">
+          <label>Nome Giocatore 1 (sceglie la parola)</label>
+          <input class="field-input" id="name-p1" type="text" placeholder="Es. Mario" maxlength="20" autocomplete="off" onkeydown="if(event.key==='Enter') event.preventDefault()">
+        </div>
+        <div class="field-group">
+          <label>Nome Giocatore 2 (indovina)</label>
+          <input class="field-input" id="name-p2" type="text" placeholder="Es. Luigi" maxlength="20" autocomplete="off" onkeydown="if(event.key==='Enter') event.preventDefault()">
+        </div>
+        <button class="btn-primary" onclick="goToWordEntry()">AVANTI</button>
       </div>
-      <button class="btn-primary" onclick="goToWordEntry()">AVANTI</button>
     </div>
   </div>
-</div>
 
-<!-- WORD ENTRY SCREEN (2P) -->
-<div class="screen" id="word-screen">
-  <div class="setup-card">
-    <div class="step-label">Passo 2 di 2</div>
-    <h2 id="word-screen-title">Mario, inserisci la parola!</h2>
-    <p style="color:#888;font-size:.88rem;margin-bottom:16px">Il Giocatore 2 non deve guardare! La parola sarà nascosta.</p>
-    <div class="field-group">
-      <label>Parola segreta (solo lettere, niente numeri)</label>
-      <input class="field-input" id="secret-word" type="password" placeholder="Scrivi qui..." maxlength="20" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-      <div class="secret-hint">La parola verrà nascosta mentre scrivi.</div>
-    </div>
-    <button class="btn-primary" onclick="startTwoPlayer()">INIZIA IL GIOCO</button>
-  </div>
-</div>
-
-<!-- GAME SCREEN -->
-<div class="screen" id="game-screen">
-  <div class="game-top">
-    <div class="player-info">Chi indovina: <span id="guesser-name">—</span></div>
-    <div class="errors-info">Errori: <span id="error-count">0</span>/7</div>
-  </div>
-
-  <div class="hangman-wrap">
-    <svg id="hangman-svg" viewBox="0 0 200 180">
-      <!-- Gallows -->
-      <line class="gallows" x1="20" y1="170" x2="180" y2="170"/>
-      <line class="gallows" x1="60" y1="170" x2="60" y2="10"/>
-      <line class="gallows" x1="60" y1="10" x2="130" y2="10"/>
-      <line class="gallows" x1="130" y1="10" x2="130" y2="30"/>
-      <!-- Body parts (revealed one by one) -->
-      <circle id="hp-head" class="body-part" cx="130" cy="45" r="15"/>
-      <line id="hp-body" class="body-part" x1="130" y1="60" x2="130" y2="110"/>
-      <line id="hp-la" class="body-part" x1="130" y1="75" x2="108" y2="95"/>
-      <line id="hp-ra" class="body-part" x1="130" y1="75" x2="152" y2="95"/>
-      <line id="hp-ll" class="body-part" x1="130" y1="110" x2="108" y2="140"/>
-      <line id="hp-rl" class="body-part" x1="130" y1="110" x2="152" y2="140"/>
-      <line id="hp-lf" class="body-part" x1="108" y1="140" x2="98" y2="148"/>
-      <line id="hp-rf" class="body-part" x1="152" y1="140" x2="162" y2="148"/>
-    </svg>
-  </div>
-
-  <div class="word-display" id="word-display"></div>
-  <div class="wrong-letters" id="wrong-letters"></div>
-
-  <div id="imp-keyboard">
-    <div class="kb-row" id="kb-row-1"></div>
-    <div class="kb-row" id="kb-row-2"></div>
-    <div class="kb-row" id="kb-row-3"></div>
-  </div>
-</div>
-
-<!-- END SCREEN -->
-<div class="screen" id="end-screen">
-  <div class="end-card" id="end-card">
-    <h2 id="end-title">Fine!</h2>
-    <div class="end-word" id="end-word"></div>
-    <div class="end-sub" id="end-sub"></div>
-    <div class="end-btns">
-      <button class="btn-primary" onclick="playAgain()">GIOCA ANCORA</button>
-      <button class="btn-secondary" onclick="backToSetup()">TORNA AL MENU</button>
+  <!-- WORD ENTRY SCREEN (2P) -->
+  <div class="screen" id="word-screen">
+    <div class="setup-card">
+      <div class="step-label">Passo 2 di 2</div>
+      <h2 id="word-screen-title">Mario, inserisci la parola!</h2>
+      <p style="color:#888;font-size:.88rem;margin-bottom:16px">Il Giocatore 2 non deve guardare! La parola sarà
+        nascosta.</p>
+      <div class="field-group">
+        <label>Parola segreta (solo lettere, niente numeri)</label>
+        <div style="position: relative;">
+          <input class="field-input" id="secret-word" type="password" placeholder="Scrivi qui..." maxlength="20"
+            autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+            onkeydown="event.stopPropagation()">
+          <button type="button" onclick="togglePassword()" id="toggle-btn"
+            style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1.2rem; color: #aaa; line-height: 1; padding: 0; display:flex;align-items:center;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+            </svg>
+          </button>
+        </div>
+        <div class="secret-hint">La parola verrà nascosta mentre scrivi.</div>
+      </div>
+      <button class="btn-primary" onclick="startTwoPlayer()">INIZIA IL GIOCO</button>
     </div>
   </div>
-</div>
 
-<div class="footer-links" style="margin-top:auto">
-  <a href="come-si-gioca.html">Come si gioca</a>
-  <span>•</span>
-  <a href="contatti.html">Contatti</a>
-  <span>•</span>
-  <a href="privacy.html">Privacy Policy</a>
-</div>
+  <!-- GAME SCREEN -->
+  <div class="screen" id="game-screen">
+    <div class="game-top">
+      <div class="player-info">Chi indovina: <span id="guesser-name">—</span></div>
+      <div class="errors-info">Errori: <span id="error-count">0</span>/7</div>
+    </div>
 
-<script>
-// ─── DIZIONARIO (caricato online) ────────────────────────────────────────────
-let WORDS = [];
+    <div class="hangman-wrap">
+      <svg id="hangman-svg" viewBox="0 0 200 180">
+        <!-- Gallows -->
+        <line class="gallows" x1="20" y1="170" x2="180" y2="170" />
+        <line class="gallows" x1="60" y1="170" x2="60" y2="10" />
+        <line class="gallows" x1="60" y1="10" x2="130" y2="10" />
+        <line class="gallows" x1="130" y1="10" x2="130" y2="30" />
+        <!-- Body parts (revealed one by one) -->
+        <circle id="hp-head" class="body-part" cx="130" cy="45" r="15" />
+        <line id="hp-body" class="body-part" x1="130" y1="60" x2="130" y2="110" />
+        <line id="hp-la" class="body-part" x1="130" y1="75" x2="108" y2="95" />
+        <line id="hp-ra" class="body-part" x1="130" y1="75" x2="152" y2="95" />
+        <line id="hp-ll" class="body-part" x1="130" y1="110" x2="108" y2="140" />
+        <line id="hp-rl" class="body-part" x1="130" y1="110" x2="152" y2="140" />
+        <line id="hp-lf" class="body-part" x1="108" y1="140" x2="98" y2="148" />
+        <line id="hp-rf" class="body-part" x1="152" y1="140" x2="162" y2="148" />
+      </svg>
+    </div>
 
-async function loadDictionary() {
-  const errEl = document.getElementById('loading-error');
-  const retryBtn = document.getElementById('loading-retry');
-  const spinner = document.getElementById('loading-spinner');
-  errEl.style.display = 'none';
-  retryBtn.style.display = 'none';
-  spinner.textContent = 'Caricamento...';
-  showScreen('loading-screen');
-  try {
-    const res = await fetch('https://raw.githubusercontent.com/napolux/paroleitaliane/master/paroleitaliane/660000_parole_italiane.txt');
-    if (!res.ok) throw new Error('Errore di rete: ' + res.status);
-    const text = await res.text();
-    WORDS = text.split('\n')
-      .map(w => w.trim().toLowerCase())
-      .filter(w => w.length >= 4 && w.length <= 10 && /^[a-z]+$/.test(w));
-    if (WORDS.length === 0) throw new Error('Dizionario vuoto');
-    spinner.textContent = 'Pronto!';
-    showScreen('setup-screen');
-  } catch(e) {
-    spinner.textContent = 'Errore di caricamento';
-    errEl.textContent = 'Impossibile caricare il dizionario: ' + e.message;
-    errEl.style.display = 'block';
-    retryBtn.style.display = 'block';
-    console.error(e);
-  }
-}
+    <div class="word-display" id="word-display"></div>
+    <div class="wrong-letters" id="wrong-letters"></div>
 
-// ─── STATO ────────────────────────────────────────────────────────────────────
-let gameMode = 1;
-let player1 = '', player2 = '', guesser = '';
-let secretWord = '';
-let guessed = new Set();
-let wrong = [];
-let maxErrors = 7;
-let gameOver = false;
-let lastSetup = null;
+    <div id="imp-keyboard">
+      <div class="kb-row" id="kb-row-1"></div>
+      <div class="kb-row" id="kb-row-2"></div>
+      <div class="kb-row" id="kb-row-3"></div>
+    </div>
+  </div>
 
-const BODY_PARTS = ['hp-head','hp-body','hp-la','hp-ra','hp-ll','hp-rl','hp-lf','hp-rf'];
-const KB_ROWS = ['QWERTYUIOP','ASDFGHJKL','ZXCVBNM'];
+  <!-- END SCREEN -->
+  <div class="screen" id="end-screen">
+    <div class="end-card" id="end-card">
+      <h2 id="end-title">Fine!</h2>
+      <div class="end-word" id="end-word"></div>
+      <div class="end-sub" id="end-sub"></div>
+      <div class="end-btns">
+        <button class="btn-primary" onclick="playAgain()">GIOCA ANCORA</button>
+        <button class="btn-secondary" onclick="backToSetup()">TORNA AL MENU</button>
+      </div>
+    </div>
+  </div>
 
-// ─── SETUP UI ─────────────────────────────────────────────────────────────────
-function setMode(m) {
-  gameMode = m;
-  document.getElementById('btn-1p').classList.toggle('selected', m===1);
-  document.getElementById('btn-2p').classList.toggle('selected', m===2);
-  document.getElementById('fields-1p').style.display = m===1 ? '' : 'none';
-  document.getElementById('fields-2p').style.display = m===2 ? '' : 'none';
-}
+  <div class="footer-links" style="margin-top:auto">
+    <a href="come-si-gioca.html">Come si gioca</a>
+    <span>•</span>
+    <a href="contatti.html">Contatti</a>
+    <span>•</span>
+    <a href="privacy.html">Privacy Policy</a>
+  </div>
 
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
+  <script>
+    // ─── TOGGLE VISIBILITÀ PAROLA SEGRETA ────────────────────────────────────────
+    const SVG_EYE  = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>`;
+    const SVG_LOCK = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/></svg>`;
 
-// ─── SINGLE PLAYER ────────────────────────────────────────────────────────────
-function startSinglePlayer() {
-  if (!WORDS.length) { alert('Dizionario non ancora caricato, riprova.'); return; }
-  const name = document.getElementById('name-1p').value.trim() || 'Giocatore';
-  guesser = name;
-  player1 = name;
-  const word = WORDS[Math.floor(Math.random() * WORDS.length)];
-  secretWord = word.toUpperCase();
-  lastSetup = { mode: 1 };
-  initGame();
-}
-
-// ─── TWO PLAYER ───────────────────────────────────────────────────────────────
-function goToWordEntry() {
-  player1 = document.getElementById('name-p1').value.trim() || 'Giocatore 1';
-  player2 = document.getElementById('name-p2').value.trim() || 'Giocatore 2';
-  document.getElementById('word-screen-title').textContent = player1 + ', inserisci la parola!';
-  document.getElementById('secret-word').value = '';
-  showScreen('word-screen');
-}
-
-function startTwoPlayer() {
-  const raw = document.getElementById('secret-word').value.trim();
-  if (!raw) { alert('Inserisci una parola!'); return; }
-  if (!/^[a-zA-ZÀ-ÿ\s]+$/.test(raw)) { alert('Usa solo lettere!'); return; }
-  guesser = player2;
-  secretWord = raw.toUpperCase().replace(/\s+/g,' ');
-  lastSetup = { mode: 2 };
-  initGame();
-}
-
-// ─── GAME INIT ────────────────────────────────────────────────────────────────
-function initGame() {
-  guessed = new Set();
-  wrong = [];
-  gameOver = false;
-  BODY_PARTS.forEach(id => document.getElementById(id).style.opacity = 0);
-  document.getElementById('error-count').textContent = '0';
-  document.getElementById('wrong-letters').textContent = '';
-  document.getElementById('guesser-name').textContent = guesser;
-  buildKeyboard();
-  renderWord();
-  showScreen('game-screen');
-}
-
-function buildKeyboard() {
-  KB_ROWS.forEach((row, i) => {
-    const el = document.getElementById('kb-row-'+(i+1));
-    el.innerHTML = '';
-    [...row].forEach(ch => {
-      const btn = document.createElement('button');
-      btn.className = 'kb-key';
-      btn.textContent = ch;
-      btn.id = 'k-'+ch;
-      btn.addEventListener('click', () => guess(ch));
-      el.appendChild(btn);
-    });
-  });
-}
-
-function renderWord() {
-  const display = document.getElementById('word-display');
-  display.innerHTML = '';
-  [...secretWord].forEach(ch => {
-    const box = document.createElement('div');
-    if (ch === ' ') {
-      box.className = 'letter-box space';
-    } else {
-      box.className = 'letter-box' + (guessed.has(ch) ? ' revealed' : '');
-      box.textContent = guessed.has(ch) ? ch : '_';
+    function togglePassword() {
+      const input = document.getElementById('secret-word');
+      const btn = document.getElementById('toggle-btn');
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.innerHTML = SVG_LOCK;
+      } else {
+        input.type = 'password';
+        btn.innerHTML = SVG_EYE;
+      }
     }
-    display.appendChild(box);
-  });
-}
 
-function guess(ch) {
-  if (gameOver || guessed.has(ch) || wrong.includes(ch)) return;
-  const letters = [...secretWord].filter(c => c !== ' ');
-  if (letters.includes(ch)) {
-    guessed.add(ch);
-    renderWord();
-    updateKeyStyle(ch, 'hit');
-    if (letters.every(c => guessed.has(c))) endGame(true);
-  } else {
-    wrong.push(ch);
-    updateKeyStyle(ch, 'miss');
-    const part = BODY_PARTS[wrong.length - 1];
-    if (part) document.getElementById(part).style.opacity = 1;
-    document.getElementById('error-count').textContent = wrong.length;
-    document.getElementById('wrong-letters').textContent = wrong.join('  ');
-    if (wrong.length >= maxErrors) endGame(false);
-  }
-}
+    // ─── DIZIONARIO (caricato online) ────────────────────────────────────────────
+    let WORDS = [];
 
-function updateKeyStyle(ch, cls) {
-  const btn = document.getElementById('k-'+ch);
-  if (btn) { btn.classList.add(cls); btn.disabled = true; }
-}
+    async function loadDictionary() {
+      const errEl = document.getElementById('loading-error');
+      const retryBtn = document.getElementById('loading-retry');
+      const spinner = document.getElementById('loading-spinner');
+      errEl.style.display = 'none';
+      retryBtn.style.display = 'none';
+      spinner.textContent = 'Caricamento...';
+      showScreen('loading-screen');
+      try {
+        const res = await fetch('https://raw.githubusercontent.com/napolux/paroleitaliane/master/paroleitaliane/660000_parole_italiane.txt');
+        if (!res.ok) throw new Error('Errore di rete: ' + res.status);
+        const text = await res.text();
+        WORDS = text.split('\n')
+          .map(w => w.trim().toLowerCase())
+          .filter(w => w.length >= 4 && w.length <= 10 && /^[a-z]+$/.test(w));
+        if (WORDS.length === 0) throw new Error('Dizionario vuoto');
+        spinner.textContent = 'Pronto!';
+        showScreen('setup-screen');
+      } catch (e) {
+        spinner.textContent = 'Errore di caricamento';
+        errEl.textContent = 'Impossibile caricare il dizionario: ' + e.message;
+        errEl.style.display = 'block';
+        retryBtn.style.display = 'block';
+        console.error(e);
+      }
+    }
 
-function endGame(win) {
-  gameOver = true;
-  const card = document.getElementById('end-card');
-  card.className = 'end-card ' + (win ? 'win' : 'lose');
-  document.getElementById('end-title').textContent = win ? 'Hai vinto!' : 'Hai perso!';
-  document.getElementById('end-word').textContent = secretWord;
-  if (win) {
-    document.getElementById('end-sub').textContent = guesser + ' ha indovinato con ' + wrong.length + ' errori!';
-  } else {
-    document.getElementById('end-sub').textContent = 'La parola era: ' + secretWord;
-  }
-  showScreen('end-screen');
-}
+    // ─── STATO ────────────────────────────────────────────────────────────────────
+    let gameMode = 1;
+    let player1 = '', player2 = '', guesser = '';
+    let secretWord = '';
+    let guessed = new Set();
+    let wrong = [];
+    let maxErrors = 7;
+    let gameOver = false;
+    let lastSetup = null;
+    let lastWin = false; // true = il guesser ha vinto l'ultima partita
 
-function playAgain() {
-  if (!lastSetup) { backToSetup(); return; }
-  if (lastSetup.mode === 1) {
-    const word = WORDS[Math.floor(Math.random() * WORDS.length)];
-    secretWord = word.toUpperCase();
-    initGame();
-  } else {
-    // Inverti i ruoli
-    const tmp = player1; player1 = player2; player2 = tmp;
-    guesser = player2;
-    document.getElementById('word-screen-title').textContent = player1 + ', inserisci la parola!';
-    document.getElementById('secret-word').value = '';
-    showScreen('word-screen');
-  }
-}
+    const BODY_PARTS = ['hp-head', 'hp-body', 'hp-la', 'hp-ra', 'hp-ll', 'hp-rl', 'hp-lf', 'hp-rf'];
+    const KB_ROWS = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
 
-function backToSetup() {
-  showScreen('setup-screen');
-}
+    // ─── SETUP UI ─────────────────────────────────────────────────────────────────
+    function setMode(m) {
+      gameMode = m;
+      document.getElementById('btn-1p').classList.toggle('selected', m === 1);
+      document.getElementById('btn-2p').classList.toggle('selected', m === 2);
+      document.getElementById('fields-1p').style.display = m === 1 ? '' : 'none';
+      document.getElementById('fields-2p').style.display = m === 2 ? '' : 'none';
+    }
 
-// ─── TASTIERA FISICA ─────────────────────────────────────────────────────────
-document.addEventListener('keydown', e => {
-  if (/^[a-zA-Z]$/.test(e.key)) guess(e.key.toUpperCase());
-});
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
 
-// ─── AVVIO ───────────────────────────────────────────────────────────────────
-loadDictionary();
-</script>
+    // ─── SINGLE PLAYER ────────────────────────────────────────────────────────────
+    function startSinglePlayer() {
+      if (!WORDS.length) { alert('Dizionario non ancora caricato, riprova.'); return; }
+      const name = document.getElementById('name-1p').value.trim() || 'Giocatore';
+      guesser = name;
+      player1 = name;
+      const word = WORDS[Math.floor(Math.random() * WORDS.length)];
+      secretWord = word.toUpperCase();
+      lastSetup = { mode: 1 };
+      initGame();
+    }
+
+    // ─── TWO PLAYER ───────────────────────────────────────────────────────────────
+    function goToWordEntry() {
+      player1 = document.getElementById('name-p1').value.trim() || 'Giocatore 1';
+      player2 = document.getElementById('name-p2').value.trim() || 'Giocatore 2';
+      document.getElementById('word-screen-title').textContent = player1 + ', inserisci la parola!';
+      const secretInput = document.getElementById('secret-word');
+      secretInput.value = '';
+      secretInput.type = 'password'; // Sempre nascosta all'inizio
+      document.getElementById('toggle-btn').innerHTML = SVG_EYE;
+      showScreen('word-screen');
+    }
+
+    function startTwoPlayer() {
+      const raw = document.getElementById('secret-word').value.trim();
+      if (!raw) { alert('Inserisci una parola!'); return; }
+      if (!/^[a-zA-ZÀ-ÿ\s]+$/.test(raw)) { alert('Usa solo lettere!'); return; }
+      guesser = player2;
+      secretWord = raw.toUpperCase().replace(/\s+/g, ' ');
+      lastSetup = { mode: 2 };
+      initGame();
+    }
+
+    // ─── GAME INIT ────────────────────────────────────────────────────────────────
+    function initGame() {
+      guessed = new Set();
+      wrong = [];
+      gameOver = false;
+      BODY_PARTS.forEach(id => document.getElementById(id).style.opacity = 0);
+      document.getElementById('error-count').textContent = '0';
+      document.getElementById('wrong-letters').textContent = '';
+      document.getElementById('guesser-name').textContent = guesser;
+      buildKeyboard();
+      renderWord();
+      showScreen('game-screen');
+    }
+
+    function buildKeyboard() {
+      KB_ROWS.forEach((row, i) => {
+        const el = document.getElementById('kb-row-' + (i + 1));
+        el.innerHTML = '';
+        [...row].forEach(ch => {
+          const btn = document.createElement('button');
+          btn.className = 'kb-key';
+          btn.textContent = ch;
+          btn.id = 'k-' + ch;
+          btn.addEventListener('click', () => guess(ch));
+          el.appendChild(btn);
+        });
+      });
+    }
+
+    function renderWord() {
+      const display = document.getElementById('word-display');
+      display.innerHTML = '';
+      [...secretWord].forEach(ch => {
+        const box = document.createElement('div');
+        if (ch === ' ') {
+          box.className = 'letter-box space';
+        } else {
+          box.className = 'letter-box' + (guessed.has(ch) ? ' revealed' : '');
+          box.textContent = guessed.has(ch) ? ch : '_';
+        }
+        display.appendChild(box);
+      });
+    }
+
+    function guess(ch) {
+      if (gameOver || guessed.has(ch) || wrong.includes(ch)) return;
+      const letters = [...secretWord].filter(c => c !== ' ');
+      if (letters.includes(ch)) {
+        guessed.add(ch);
+        renderWord();
+        updateKeyStyle(ch, 'hit');
+        if (letters.every(c => guessed.has(c))) endGame(true);
+      } else {
+        wrong.push(ch);
+        updateKeyStyle(ch, 'miss');
+        const part = BODY_PARTS[wrong.length - 1];
+        if (part) document.getElementById(part).style.opacity = 1;
+        document.getElementById('error-count').textContent = wrong.length;
+        document.getElementById('wrong-letters').textContent = wrong.join('  ');
+        if (wrong.length >= maxErrors) endGame(false);
+      }
+    }
+
+    function updateKeyStyle(ch, cls) {
+      const btn = document.getElementById('k-' + ch);
+      if (btn) { btn.classList.add(cls); btn.disabled = true; }
+    }
+
+    // ─── ANIMAZIONE VITTORIA ──────────────────────────────────────────────────────
+    function triggerWinAnimation(callback) {
+      const overlay = document.createElement('div');
+      overlay.id = 'confetti-overlay';
+      document.body.appendChild(overlay);
+
+      const colors = ['#6c63ff', '#e040fb', '#6dd56b', '#f9ca24', '#ff6b6b', '#48dbfb', '#ffffff', '#ffa94d'];
+      const count = 90;
+      for (let i = 0; i < count; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const left = Math.random() * 100;
+        const duration = 1.1 + Math.random() * 1.3;
+        const delay = Math.random() * 0.6;
+        const size = 6 + Math.random() * 9;
+        const isCircle = Math.random() > 0.5;
+        piece.style.cssText = `
+          left: ${left}%;
+          background: ${color};
+          width: ${size}px;
+          height: ${size}px;
+          border-radius: ${isCircle ? '50%' : '2px'};
+          animation-duration: ${duration}s;
+          animation-delay: ${delay}s;
+        `;
+        overlay.appendChild(piece);
+      }
+
+      // Pop sequenziale delle lettere indovinate
+      const boxes = document.querySelectorAll('.letter-box.revealed');
+      boxes.forEach((box, i) => {
+        setTimeout(() => {
+          box.style.animation = 'winPop 0.45s ease forwards';
+        }, i * 70);
+      });
+
+      // Dopo l'animazione mostra la schermata finale
+      setTimeout(() => {
+        overlay.remove();
+        callback();
+      }, 1900);
+    }
+
+    function endGame(win) {
+      gameOver = true;
+      lastWin = win;
+      const card = document.getElementById('end-card');
+      card.className = 'end-card ' + (win ? 'win' : 'lose');
+      document.getElementById('end-title').textContent = win ? 'Hai vinto!' : 'Hai perso!';
+      document.getElementById('end-word').textContent = secretWord;
+      if (win) {
+        document.getElementById('end-sub').textContent = guesser + ' ha indovinato con ' + wrong.length + ' errori!';
+      } else {
+        document.getElementById('end-sub').textContent = 'La parola era: ' + secretWord;
+      }
+      if (win) {
+        triggerWinAnimation(() => showScreen('end-screen'));
+      } else {
+        showScreen('end-screen');
+      }
+    }
+
+    function playAgain() {
+      if (!lastSetup) { backToSetup(); return; }
+      if (lastSetup.mode === 1) {
+        const word = WORDS[Math.floor(Math.random() * WORDS.length)];
+        secretWord = word.toUpperCase();
+        initGame();
+      } else {
+        // Se il guesser ha vinto → si invertono i ruoli
+        // Se il guesser ha perso  → i ruoli rimangono uguali (stesso scrittore, stesso guesser)
+        if (lastWin) {
+          const tmp = player1; player1 = player2; player2 = tmp;
+        }
+        guesser = player2;
+        document.getElementById('word-screen-title').textContent = player1 + ', inserisci la parola!';
+        const secretInput = document.getElementById('secret-word');
+        secretInput.value = '';
+        secretInput.type = 'password';
+        document.getElementById('toggle-btn').innerHTML = SVG_EYE;
+        showScreen('word-screen');
+      }
+    }
+
+    function backToSetup() {
+      showScreen('setup-screen');
+    }
+
+    // ─── TASTIERA FISICA ─────────────────────────────────────────────────────────
+    document.addEventListener('keydown', e => {
+      // Ignora se il focus è sul campo della parola segreta
+      if (document.activeElement === document.getElementById('secret-word')) return;
+      if (/^[a-zA-Z]$/.test(e.key)) guess(e.key.toUpperCase());
+    });
+
+    // ─── AVVIO ───────────────────────────────────────────────────────────────────
+    loadDictionary();
+  </script>
 </body>
+
 </html>
