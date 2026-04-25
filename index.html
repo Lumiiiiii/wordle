@@ -622,14 +622,16 @@
 
         .leaderboard-card {
             background: linear-gradient(160deg, #1c1c2e, #1a1a1a);
-            padding: 30px;
+            padding: 28px 20px;
             border-radius: 20px;
-            width: 90%;
-            max-width: 400px;
+            width: 95%;
+            max-width: 700px;
             text-align: center;
             border: 1px solid rgba(108, 99, 255, 0.2);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 30px var(--color-accent-glow);
             animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-height: 85vh;
+            overflow-y: auto;
         }
 
         .leaderboard-card h2 {
@@ -639,19 +641,66 @@
             letter-spacing: 1px;
         }
 
-        #leaderboard-list {
-            margin: 20px 0;
+        .lb-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        @media (max-width: 480px) {
+            .lb-split {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        .lb-section {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 14px 10px;
             text-align: left;
-            font-size: 1rem;
+        }
+
+        .lb-section-title {
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .lb-section-title.streak-title {
+            color: #e8590c;
+        }
+
+        .lb-section-title.time-title {
+            color: #4fc3f7;
+        }
+
+        .lb-list {
+            font-size: 0.9rem;
         }
 
         .lb-entry {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 10px 4px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 8px 4px;
             transition: background 0.2s;
+        }
+
+        .lb-entry:last-child {
+            border-bottom: none;
         }
 
         .lb-entry:hover {
@@ -660,7 +709,8 @@
 
         .lb-rank {
             color: #888;
-            min-width: 28px;
+            min-width: 26px;
+            font-size: 0.85rem;
         }
 
         .lb-rank.gold {
@@ -678,11 +728,22 @@
         .lb-name {
             flex: 1;
             font-weight: 600;
+            font-size: 0.85rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .lb-score {
             color: var(--color-correct);
             font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .lb-time-value {
+            color: #4fc3f7;
+            font-weight: 700;
+            font-size: 0.85rem;
         }
 
         .btn-close-lb {
@@ -994,8 +1055,21 @@
                         <path
                             d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.6 1.9 4.7 4.4 5.1.7 1.2 1.8 2.1 3.1 2.5V19H7v2h10v-2h-3.5v-3.4c1.3-.4 2.4-1.3 3.1-2.5C19.1 12.7 21 10.6 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.9C5.8 10.4 5 9.3 5 8zm14 0c0 1.3-.8 2.4-2 2.9V7h2v1z" />
                     </svg></span> CLASSIFICA GLOBALE</h2>
-            <div id="leaderboard-list">
-                Caricamento...
+            <div class="lb-split">
+                <div class="lb-section">
+                    <div class="lb-section-title streak-title">
+                        <span class="icon icon-flame" style="font-size:1.1em"><svg viewBox="0 0 16 16"><path d="M8 16c-3.3 0-5-2.3-5-4.8 0-2.5 1.5-4.1 2.7-5.3.2-.2.5 0 .5.3 0 .7.2 1.7.9 2.4.1-.5.4-1.3.9-2.1C8.7 5.3 8 3.7 7.7 3c-.1-.2.1-.4.3-.4 2.1.3 5 3 5 6.2 0 3.2-2.3 5.2-5 5.2zm0-2c1.5 0 2.5-1 2.5-2.5 0-1.5-1-2.8-2-3.5-.1.5-.3 1-.7 1.5-.1.2-.4.1-.5-.1-.2-.6-.5-1.2-.8-1.6-.8 1-1.5 2-1.5 3.2C5 12.8 6.2 14 8 14z"/></svg></span>
+                        Streak Migliore
+                    </div>
+                    <div id="leaderboard-streak" class="lb-list">Caricamento...</div>
+                </div>
+                <div class="lb-section">
+                    <div class="lb-section-title time-title">
+                        <span class="icon" style="font-size:1.1em;color:#4fc3f7"><svg viewBox="0 0 24 24"><path d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42A8.962 8.962 0 0 0 12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg></span>
+                        Tempo Migliore
+                    </div>
+                    <div id="leaderboard-time" class="lb-list">Caricamento...</div>
+                </div>
             </div>
             <button class="btn-close-lb" onclick="chiudiClassifica()">CHIUDI</button>
         </div>
@@ -1474,36 +1548,61 @@
 
         async function mostraClassifica() {
             const overlay = document.getElementById('leaderboard-overlay');
-            const list = document.getElementById('leaderboard-list');
+            const streakList = document.getElementById('leaderboard-streak');
+            const timeList = document.getElementById('leaderboard-time');
             overlay.style.display = 'flex';
-            list.innerHTML = "Caricamento...";
+            streakList.innerHTML = 'Caricamento...';
+            timeList.innerHTML = 'Caricamento...';
 
-            const { data, error } = await _supabase
+            const flameIcon = '<span class="icon icon-flame" style="font-size:0.9em"><svg viewBox="0 0 16 16"><path d="M8 16c-3.3 0-5-2.3-5-4.8 0-2.5 1.5-4.1 2.7-5.3.2-.2.5 0 .5.3 0 .7.2 1.7.9 2.4.1-.5.4-1.3.9-2.1C8.7 5.3 8 3.7 7.7 3c-.1-.2.1-.4.3-.4 2.1.3 5 3 5 6.2 0 3.2-2.3 5.2-5 5.2zm0-2c1.5 0 2.5-1 2.5-2.5 0-1.5-1-2.8-2-3.5-.1.5-.3 1-.7 1.5-.1.2-.4.1-.5-.1-.2-.6-.5-1.2-.8-1.6-.8 1-1.5 2-1.5 3.2C5 12.8 6.2 14 8 14z"/></svg></span>';
+            const clockIcon = '<span class="icon" style="font-size:0.9em;color:#4fc3f7"><svg viewBox="0 0 24 24"><path d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42A8.962 8.962 0 0 0 12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg></span>';
+
+            function renderEntry(player, index, valueHtml) {
+                const rankClass = index === 0 ? 'gold' : index === 1 ? 'silver' : index === 2 ? 'bronze' : '';
+                const medal = index === 0 ? '1°' : index === 1 ? '2°' : index === 2 ? '3°' : `${index + 1}.`;
+                const isMe = player.username === playerNickname;
+                return `
+                    <div class="lb-entry" ${isMe ? 'style="background: rgba(108, 99, 255, 0.1); border-radius: 6px;"' : ''}>
+                        <span class="lb-rank ${rankClass}">${medal}</span>
+                        <span class="lb-name">${player.username}${isMe ? ' (tu)' : ''}</span>
+                        ${valueHtml}
+                    </div>
+                `;
+            }
+
+            // Fetch streak leaderboard
+            const { data: streakData, error: streakError } = await _supabase
                 .from('classifica')
-                .select('username, streak, tempo_impiegato')
-                .order('streak', { ascending: false });
+                .select('username, streak')
+                .order('streak', { ascending: false })
+                .limit(10);
 
-            if (error) {
-                list.innerHTML = "<p style='text-align:center; color:#888;'>Errore nel caricamento.</p>";
-                console.error(error);
-            } else if (!data || data.length === 0) {
-                list.innerHTML = "<p style='text-align:center; color:#888;'>Nessun punteggio ancora. Sii il primo!</p>";
+            if (streakError) {
+                streakList.innerHTML = "<p style='text-align:center; color:#888;'>Errore.</p>";
+            } else if (!streakData || streakData.length === 0) {
+                streakList.innerHTML = "<p style='text-align:center; color:#666; font-size:0.85rem;'>Nessun dato</p>";
             } else {
-                const flameIcon = '<span class="icon icon-flame" style="font-size:0.9em"><svg viewBox="0 0 16 16"><path d="M8 16c-3.3 0-5-2.3-5-4.8 0-2.5 1.5-4.1 2.7-5.3.2-.2.5 0 .5.3 0 .7.2 1.7.9 2.4.1-.5.4-1.3.9-2.1C8.7 5.3 8 3.7 7.7 3c-.1-.2.1-.4.3-.4 2.1.3 5 3 5 6.2 0 3.2-2.3 5.2-5 5.2zm0-2c1.5 0 2.5-1 2.5-2.5 0-1.5-1-2.8-2-3.5-.1.5-.3 1-.7 1.5-.1.2-.4.1-.5-.1-.2-.6-.5-1.2-.8-1.6-.8 1-1.5 2-1.5 3.2C5 12.8 6.2 14 8 14z"/></svg></span>';
-                list.innerHTML = data.map((player, index) => {
-                    const rankClass = index === 0 ? 'gold' : index === 1 ? 'silver' : index === 2 ? 'bronze' : '';
-                    const medal = index === 0 ? '1°' : index === 1 ? '2°' : index === 2 ? '3°' : `${index + 1}.`;
-                    const isMe = player.username === playerNickname;
-                    const tempoStr = player.tempo_impiegato != null ? formatTime(player.tempo_impiegato) : '—';
-                    return `
-                        <div class="lb-entry" ${isMe ? 'style="background: rgba(108, 99, 255, 0.1);"' : ''}>
-                            <span class="lb-rank ${rankClass}">${medal}</span>
-                            <span class="lb-name">${player.username}${isMe ? ' (tu)' : ''}</span>
-                            <span class="lb-score">${player.streak} ${flameIcon}</span>
-                            <span style="color:#aaa; font-size:0.8rem; min-width:42px; text-align:right;">${tempoStr}</span>
-                        </div>
-                    `;
-                }).join('');
+                streakList.innerHTML = streakData.map((p, i) =>
+                    renderEntry(p, i, `<span class="lb-score">${p.streak} ${flameIcon}</span>`)
+                ).join('');
+            }
+
+            // Fetch time leaderboard (only players with a recorded time)
+            const { data: timeData, error: timeError } = await _supabase
+                .from('classifica')
+                .select('username, tempo_impiegato')
+                .not('tempo_impiegato', 'is', null)
+                .order('tempo_impiegato', { ascending: true })
+                .limit(10);
+
+            if (timeError) {
+                timeList.innerHTML = "<p style='text-align:center; color:#888;'>Errore.</p>";
+            } else if (!timeData || timeData.length === 0) {
+                timeList.innerHTML = "<p style='text-align:center; color:#666; font-size:0.85rem;'>Nessun dato</p>";
+            } else {
+                timeList.innerHTML = timeData.map((p, i) =>
+                    renderEntry(p, i, `<span class="lb-time-value">${formatTime(p.tempo_impiegato)} ${clockIcon}</span>`)
+                ).join('');
             }
         }
 
