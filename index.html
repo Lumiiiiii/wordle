@@ -973,40 +973,40 @@
 
     <div id="keyboard">
         <div class="keyboard-row">
-            <button class="key" data-key="Q">Q</button>
-            <button class="key" data-key="W">W</button>
-            <button class="key" data-key="E">E</button>
-            <button class="key" data-key="R">R</button>
-            <button class="key" data-key="T">T</button>
-            <button class="key" data-key="Y">Y</button>
-            <button class="key" data-key="U">U</button>
-            <button class="key" data-key="I">I</button>
-            <button class="key" data-key="O">O</button>
-            <button class="key" data-key="P">P</button>
+            <button type="button" class="key" data-key="Q">Q</button>
+            <button type="button" class="key" data-key="W">W</button>
+            <button type="button" class="key" data-key="E">E</button>
+            <button type="button" class="key" data-key="R">R</button>
+            <button type="button" class="key" data-key="T">T</button>
+            <button type="button" class="key" data-key="Y">Y</button>
+            <button type="button" class="key" data-key="U">U</button>
+            <button type="button" class="key" data-key="I">I</button>
+            <button type="button" class="key" data-key="O">O</button>
+            <button type="button" class="key" data-key="P">P</button>
         </div>
         <div class="keyboard-row">
             <div style="flex: 0.5;"></div>
-            <button class="key" data-key="A">A</button>
-            <button class="key" data-key="S">S</button>
-            <button class="key" data-key="D">D</button>
-            <button class="key" data-key="F">F</button>
-            <button class="key" data-key="G">G</button>
-            <button class="key" data-key="H">H</button>
-            <button class="key" data-key="J">J</button>
-            <button class="key" data-key="K">K</button>
-            <button class="key" data-key="L">L</button>
+            <button type="button" class="key" data-key="A">A</button>
+            <button type="button" class="key" data-key="S">S</button>
+            <button type="button" class="key" data-key="D">D</button>
+            <button type="button" class="key" data-key="F">F</button>
+            <button type="button" class="key" data-key="G">G</button>
+            <button type="button" class="key" data-key="H">H</button>
+            <button type="button" class="key" data-key="J">J</button>
+            <button type="button" class="key" data-key="K">K</button>
+            <button type="button" class="key" data-key="L">L</button>
             <div style="flex: 0.5;"></div>
         </div>
         <div class="keyboard-row">
-            <button class="key large" data-key="ENTER">INVIO</button>
-            <button class="key" data-key="Z">Z</button>
-            <button class="key" data-key="X">X</button>
-            <button class="key" data-key="C">C</button>
-            <button class="key" data-key="V">V</button>
-            <button class="key" data-key="B">B</button>
-            <button class="key" data-key="N">N</button>
-            <button class="key" data-key="M">M</button>
-            <button class="key large" data-key="BACKSPACE">⌫</button>
+            <button type="button" class="key large" data-key="ENTER">INVIO</button>
+            <button type="button" class="key" data-key="Z">Z</button>
+            <button type="button" class="key" data-key="X">X</button>
+            <button type="button" class="key" data-key="C">C</button>
+            <button type="button" class="key" data-key="V">V</button>
+            <button type="button" class="key" data-key="B">B</button>
+            <button type="button" class="key" data-key="N">N</button>
+            <button type="button" class="key" data-key="M">M</button>
+            <button type="button" class="key large" data-key="BACKSPACE">⌫</button>
         </div>
     </div>
 
@@ -1081,8 +1081,8 @@
             <h2>Benvenuto!</h2>
             <p>Scegli un nickname per la classifica globale. Potrai cambiarlo in seguito.</p>
             <input type="text" id="nickname-input" class="nickname-input" placeholder="Il tuo nickname..."
-                maxlength="20" autocomplete="off">
-            <button class="btn-confirm-nick" onclick="confermaNickname()">CONFERMA</button>
+                maxlength="20" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
+            <button type="button" class="btn-confirm-nick" onclick="confermaNickname()">CONFERMA</button>
         </div>
     </div>
 
@@ -1178,7 +1178,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('nickname-input').addEventListener('keydown', (e) => {
                 e.stopPropagation(); // Previeni che il gioco catturi il tasto
-                if (e.key === 'Enter') confermaNickname();
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Previeni submit impliciti / autocomplete del mobile
+                    confermaNickname();
+                }
             });
         });
 
