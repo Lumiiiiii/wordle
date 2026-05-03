@@ -45,10 +45,19 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            overflow-x: hidden;
+            touch-action: pan-y;
+        }
+
+        .game-wrapper {
+            width: 100%;
             height: 100vh;
             height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             overflow: hidden;
-            touch-action: pan-y;
+            flex-shrink: 0;
         }
 
         header {
@@ -839,6 +848,118 @@
             color: var(--color-accent);
         }
 
+        /* ── Sezione contenuto SEO ── */
+        .seo-content {
+            width: 100%;
+            max-width: 720px;
+            padding: 48px 24px 60px;
+            margin: 0 auto;
+        }
+
+        .seo-content h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin: 32px 0 14px;
+            background: linear-gradient(135deg, #6c63ff, #e040fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .seo-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .seo-content h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ccc;
+            margin: 24px 0 10px;
+        }
+
+        .seo-content p {
+            font-size: 0.95rem;
+            color: #999;
+            line-height: 1.75;
+            margin-bottom: 14px;
+        }
+
+        .seo-content ul {
+            color: #999;
+            font-size: 0.95rem;
+            line-height: 1.75;
+            padding-left: 20px;
+            margin-bottom: 14px;
+        }
+
+        .seo-content ul li {
+            margin-bottom: 6px;
+        }
+
+        .seo-divider {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(108,99,255,0.3), transparent);
+            margin: 36px 0;
+        }
+
+        /* Definizione parola */
+        .definition-box {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(108, 99, 255, 0.15);
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin: 12px 0 4px;
+            text-align: left;
+            max-height: 140px;
+            overflow-y: auto;
+            transition: all 0.3s ease;
+        }
+
+        .definition-box::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .definition-box::-webkit-scrollbar-thumb {
+            background: rgba(108, 99, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        .definition-label {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--color-accent);
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .definition-text {
+            font-size: 0.85rem;
+            color: #bbb;
+            line-height: 1.5;
+        }
+
+        .definition-text.loading {
+            color: #666;
+            font-style: italic;
+        }
+
+        .definition-link {
+            display: inline-block;
+            margin-top: 6px;
+            font-size: 0.75rem;
+            color: var(--color-accent);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        .definition-link:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
         /* Mobile: header più compatto per non schiacciare il board */
         @media (max-width: 480px) {
             header h1 {
@@ -872,6 +993,7 @@
 
 <body>
 
+    <div class="game-wrapper">
     <header>
         <div class="ad-banner">
             <span>Pubblicità</span>
@@ -956,6 +1078,168 @@
         <span>•</span>
         <a href="privacy.html">Privacy Policy</a>
     </div>
+    </div><!-- fine game-wrapper -->
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SEZIONE CONTENUTO EDITORIALE (SEO / AdSense)
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="seo-content" id="scopri-di-piu">
+
+        <h2>Wordle IT: il gioco di parole che ha conquistato il mondo</h2>
+        <p>
+            Wordle IT è la versione italiana del celebre gioco di parole creato nel 2021 dall'ingegnere Josh Wardle.
+            L'obiettivo è semplice ma avvincente: indovinare una parola di cinque lettere in un massimo di sei tentativi.
+            Dopo ogni tentativo, il gioco fornisce indizi visivi attraverso un sistema di colori — verde per le lettere
+            nella posizione corretta, giallo per le lettere presenti ma in una posizione diversa, e grigio per le lettere
+            assenti. Questa meccanica, apparentemente elementare, nasconde una profondità strategica sorprendente che
+            ha catturato milioni di giocatori in tutto il mondo.
+        </p>
+        <p>
+            La versione italiana presenta sfide uniche legate alla ricchezza del nostro vocabolario: la lingua italiana
+            conta oltre 260.000 lemmi registrati nei principali dizionari, e le parole di cinque lettere rappresentano
+            una fetta significativa del lessico quotidiano. Ogni partita diventa così un piccolo viaggio nella
+            padronanza linguistica del giocatore.
+        </p>
+
+        <hr class="seo-divider">
+
+        <h2>La storia dei giochi di parole</h2>
+        <p>
+            I giochi di parole hanno radici antichissime che affondano nelle prime civiltà umane. Gli antichi Greci
+            erano appassionati di anagrammi e giochi linguistici, mentre i Romani si divertivano con i cosiddetti
+            "quadrati magici" di lettere — iscrizioni in cui le parole potevano essere lette in più direzioni.
+            Il famoso quadrato del Sator, ritrovato a Pompei, è uno degli esempi più antichi di gioco di parole
+            strutturato nella storia occidentale.
+        </p>
+        <p>
+            Nel XVIII e XIX secolo, i cruciverba e gli enigmi lessicali divennero un passatempo popolare nei salotti
+            europei. Il primo cruciverba moderno fu pubblicato nel 1913 sul supplemento domenicale del New York World,
+            segnando l'inizio di un'era d'oro per i giochi di parole. Da allora, questi passatempi si sono evoluti
+            continuamente, passando dai giornali cartacei ai videogiochi, fino ad arrivare alle app per smartphone
+            che oggi utilizziamo quotidianamente.
+        </p>
+        <p>
+            Wordle rappresenta l'ultima grande evoluzione di questa tradizione secolare. La sua genialità risiede
+            nella semplicità: una sola parola al giorno, nessuna registrazione obbligatoria, nessuna pubblicità
+            invasiva nella versione originale. Questa filosofia minimalista ha paradossalmente generato un fenomeno
+            virale, con milioni di persone che condividono i propri risultati sui social media attraverso le ormai
+            iconiche griglie colorate.
+        </p>
+
+        <hr class="seo-divider">
+
+        <h2>Benefici cognitivi dei giochi di parole</h2>
+        <p>
+            Giocare regolarmente a Wordle e ad altri giochi di parole non è solo un piacevole passatempo:
+            numerose ricerche scientifiche hanno dimostrato che queste attività apportano benefici significativi
+            al cervello. Ecco i principali vantaggi documentati dalla comunità scientifica:
+        </p>
+        <ul>
+            <li><strong>Potenziamento della memoria lessicale:</strong> cercare la parola giusta tra migliaia
+            di possibilità allena la memoria a lungo termine e rafforza le connessioni neurali legate al linguaggio.</li>
+            <li><strong>Miglioramento delle capacità logiche:</strong> il ragionamento deduttivo necessario per
+            restringere le possibilità a ogni tentativo stimola le aree prefrontali del cervello, responsabili
+            del pensiero analitico.</li>
+            <li><strong>Riduzione dello stress:</strong> concentrarsi su un enigma linguistico permette alla mente
+            di distogliersi dalle preoccupazioni quotidiane, producendo un effetto rilassante simile alla meditazione.</li>
+            <li><strong>Prevenzione del declino cognitivo:</strong> studi pubblicati su riviste come il Journal of
+            the International Neuropsychological Society suggeriscono che i giochi di parole possano contribuire
+            a mantenere attive le funzioni cognitive anche in età avanzata.</li>
+            <li><strong>Arricchimento del vocabolario:</strong> ogni partita espone il giocatore a parole che
+            potrebbe non utilizzare abitualmente, ampliando passivamente il proprio repertorio linguistico.</li>
+        </ul>
+
+        <hr class="seo-divider">
+
+        <h2>Perché la lingua italiana è perfetta per Wordle</h2>
+        <p>
+            L'italiano è una lingua particolarmente adatta a giochi come Wordle per diverse ragioni strutturali.
+            Innanzitutto, la corrispondenza quasi perfetta tra grafema e fonema — ovvero il fatto che ogni lettera
+            corrisponde generalmente a un unico suono — rende l'italiano una lingua "trasparente" dal punto di vista
+            ortografico. Questo significa che i giocatori italiani possono ragionare foneticamente mentre cercano
+            la parola giusta, un vantaggio che non esiste in lingue come l'inglese o il francese, dove la stessa
+            lettera può avere pronunce molto diverse.
+        </p>
+        <p>
+            Inoltre, la struttura sillabica dell'italiano — prevalentemente composta da sillabe aperte (consonante + vocale)
+            — crea schemi ricorrenti che i giocatori esperti imparano a riconoscere. Le parole italiane di cinque lettere
+            seguono spesso pattern come CVCVC (consonante-vocale-consonante-vocale-consonante) o CVCCV, il che permette
+            di sviluppare strategie specifiche per la nostra lingua.
+        </p>
+        <p>
+            Un altro aspetto affascinante è la ricchezza morfologica dell'italiano. Le desinenze verbali, i suffissi
+            diminutivi e accrescitivi, e la flessione nominale generano un numero enorme di parole di cinque lettere,
+            garantendo una varietà pressoché infinita di sfide. Parole come "fuoco", "cielo", "monte", "ponte" e
+            "cuore" non sono solo soluzioni di un gioco: sono finestre sulla cultura e sulla poesia della nostra
+            lingua, parole cariche di significato e storia.
+        </p>
+
+        <hr class="seo-divider">
+
+        <h2>Strategie e consigli per vincere a Wordle IT</h2>
+        <h3>La prima parola è fondamentale</h3>
+        <p>
+            La scelta della parola iniziale può fare la differenza tra una vittoria fulminea e una sconfitta.
+            I giocatori esperti consigliano di iniziare con una parola che contenga le vocali più comuni in italiano
+            (A, E, I, O) e consonanti frequenti come R, S, T, L, N. Parole come "AIRONE", "STARE" o "LENTO"
+            sono ottime candidate per il primo tentativo, poiché massimizzano la quantità di informazioni ottenute.
+        </p>
+        <h3>Ragiona per esclusione</h3>
+        <p>
+            Ogni lettera grigia è un'informazione preziosa: elimina decine di parole possibili in un colpo solo.
+            Tieni traccia mentale delle lettere escluse e concentrati su quelle ancora in gioco. Le lettere gialle
+            sono altrettanto importanti: una lettera presente ma in posizione sbagliata ti indica non solo che quella
+            lettera è nella soluzione, ma anche dove non si trova.
+        </p>
+        <h3>Non ripetere lettere già escluse</h3>
+        <p>
+            Un errore comune tra i principianti è riutilizzare nei tentativi successivi lettere già marcate in grigio.
+            Ogni tentativo dovrebbe introdurre il maggior numero possibile di lettere nuove, specialmente nelle prime
+            mosse, per raccogliere più indizi possibili.
+        </p>
+        <h3>Pensa alle desinenze italiane</h3>
+        <p>
+            Molte parole italiane di cinque lettere terminano con pattern riconoscibili: -ENTO, -ONTE, -ELLO,
+            -ETTO, -ARDO, -ORNO. Riconoscere questi schemi può aiutarti a indovinare la parola più rapidamente,
+            soprattutto quando hai già individuato le ultime lettere.
+        </p>
+
+        <hr class="seo-divider">
+
+        <h2>Come si gioca a Wordle IT</h2>
+        <p>
+            Giocare a Wordle IT è semplicissimo. Ogni partita ti sfida a indovinare una parola italiana di
+            cinque lettere. Hai a disposizione sei tentativi: digita una parola valida usando la tastiera
+            e premi Invio per confermare. Il gioco controlla che la parola sia presente nel dizionario
+            italiano e ti fornisce un feedback immediato attraverso i colori.
+        </p>
+        <p>
+            Una casella <strong style="color:#538d4e">verde</strong> indica che la lettera è corretta e nella
+            posizione giusta. Una casella <strong style="color:#b59f3b">gialla</strong> significa che la lettera
+            è presente nella parola ma si trova in un'altra posizione. Una casella <strong style="color:#666">grigia</strong>
+            indica che la lettera non è presente nella parola da indovinare.
+        </p>
+        <p>
+            Wordle IT tiene traccia della tua streak (serie di vittorie consecutive) e del tempo impiegato
+            per completare ogni partita. Puoi anche competere nella classifica globale impostando un nickname.
+            Sfida te stesso a migliorare i tuoi record personali o confrontati con giocatori da tutta Italia!
+        </p>
+        <p>
+            Oltre alla modalità Wordle classica, il sito offre anche il gioco dell'<a href="impiccato.html"
+            style="color:#e040fb">Impiccato</a>, un altro grande classico dei giochi di parole, disponibile
+            sia in modalità giocatore singolo che in sfida a due giocatori. Metti alla prova il tuo vocabolario
+            italiano e divertiti con queste sfide linguistiche quotidiane!
+        </p>
+
+    </section>
+
+    <div class="footer-links" style="padding-bottom:20px">
+        <a href="come-si-gioca.html">Come si gioca</a>
+        <span>•</span>
+        <a href="contatti.html">Contatti</a>
+        <span>•</span>
+        <a href="privacy.html">Privacy Policy</a>
+    </div>
 
     <!-- Modal for Endgame screen -->
     <div id="modal-overlay">
@@ -982,6 +1266,11 @@
             </div>
 
             <div id="mini-board-container"></div>
+
+            <div class="definition-box" id="definition-box" style="display:none">
+                <div class="definition-label">Definizione</div>
+                <div class="definition-text" id="definition-text"></div>
+            </div>
 
             <button id="play-again" onclick="resetGame()">GIOCA ANCORA</button>
         </div>
@@ -1404,6 +1693,78 @@
             }
         }
 
+        // ─── DEFINIZIONE (Wikizionario → Wikipedia → Treccani link) ─────────────
+        async function fetchDefinition(word) {
+            const defBox = document.getElementById('definition-box');
+            const defText = document.getElementById('definition-text');
+            defBox.style.display = 'block';
+            defText.className = 'definition-text loading';
+            defText.innerHTML = 'Caricamento definizione...';
+
+            const cleanWord = word.toLowerCase().replace(/[^a-zà-ÿ]/g, '');
+            if (!cleanWord) { defBox.style.display = 'none'; return; }
+
+            const treccanLink = '<a class="definition-link" href="https://www.treccani.it/vocabolario/' +
+                encodeURIComponent(cleanWord) + '/" target="_blank" rel="noopener">Cerca su Treccani →</a>';
+
+            // 1) Wikizionario italiano — usa action=parse per ottenere l'HTML renderizzato
+            try {
+                const wiktRes = await fetch(
+                    'https://it.wiktionary.org/w/api.php?action=parse&page=' + encodeURIComponent(cleanWord) +
+                    '&prop=text&format=json&origin=*'
+                );
+                if (wiktRes.ok) {
+                    const wiktData = await wiktRes.json();
+                    if (wiktData.parse && wiktData.parse.text) {
+                        const html = wiktData.parse.text['*'];
+                        // Parsa l'HTML per estrarre il testo
+                        const tmp = document.createElement('div');
+                        tmp.innerHTML = html;
+                        // Rimuovi elementi non utili (table of contents, edit links, etc.)
+                        tmp.querySelectorAll('.mw-editsection, .toc, .mw-empty-elt, script, style, sup.reference, .noprint').forEach(el => el.remove());
+                        // Cerca i paragrafi e le liste di definizioni
+                        let defParts = [];
+                        const elements = tmp.querySelectorAll('p, ol > li');
+                        for (const el of elements) {
+                            const t = el.textContent.trim();
+                            // Salta righe vuote o solo di navigazione
+                            if (!t || t.length < 3) continue;
+                            // Salta intestazioni di sezione che finiscono nei paragrafi
+                            if (/^(Etimologia|Pronuncia|Sillabazione|Sinonimi|Contrari|Traduzione|Proverbi|Note|Voci correlate|Altri progetti|Iperonimi|Iponimi)/i.test(t)) continue;
+                            defParts.push(t);
+                            if (defParts.join(' ').length > 300) break;
+                        }
+                        if (defParts.length > 0) {
+                            let text = defParts.join(' ').trim();
+                            if (text.length > 400) text = text.substring(0, 397) + '...';
+                            defText.className = 'definition-text';
+                            defText.innerHTML = text + '<br>' + treccanLink;
+                            return;
+                        }
+                    }
+                }
+            } catch { /* continua con Wikipedia */ }
+
+            // 2) Fallback: Wikipedia italiana
+            try {
+                const wikiRes = await fetch('https://it.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(cleanWord));
+                if (wikiRes.ok) {
+                    const wikiData = await wikiRes.json();
+                    if (wikiData.extract && wikiData.extract.length > 5) {
+                        let text = wikiData.extract;
+                        if (text.length > 400) text = text.substring(0, 397) + '...';
+                        defText.className = 'definition-text';
+                        defText.innerHTML = text + '<br>' + treccanLink;
+                        return;
+                    }
+                }
+            } catch { /* continua con fallback */ }
+
+            // 3) Nessuna definizione — mostra comunque link Treccani
+            defText.className = 'definition-text';
+            defText.innerHTML = 'Definizione non disponibile online.' + '<br>' + treccanLink;
+        }
+
         function endGame(won) {
             stopTimer();
             stats.played++;
@@ -1448,6 +1809,9 @@
             document.getElementById('modal-subtitle').textContent = won ? `Tentativo ${currentR + 1} di ${ROWS}` : `La parola era: ${TARGET_WORD}`;
             document.getElementById('message-container').innerHTML = '';
             document.getElementById('modal-overlay').style.display = 'flex';
+
+            // Carica definizione da Wikipedia
+            fetchDefinition(TARGET_WORD);
         }
 
         function resetGame() {
